@@ -82,10 +82,10 @@ $result = mysqli_query($conn, "SELECT * FROM tb_golongan");
 						<label class="col-form-label col-md-3 col-sm-3 label-align">Jenis Kendaraan</label>
 						<div class="col-md-7">
 							<select name="jenis_kendaraan" class="form-control" required="">
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option three</option>
-								<option>Option four</option>
+								<option>Motor</option>
+								<option>Mobil Pribadi</option>
+								<option>Truk Kecil (4 Roda)</option>
+								<option>Truk Kecil (4 Roda)</option>
 							</select>
 						</div>
 					</div>
