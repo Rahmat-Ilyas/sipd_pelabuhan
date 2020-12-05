@@ -83,7 +83,7 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="row">
         <div class="col-md-6">
           <h1 class="title">Pelabuhan Pamatata Kabupaten Selayar</h1>
-          <h4>Pelabuhan penyebrangan Pamatata adalah pelabuhan yang terletak di desa Pamatata, Kec. Bontomatene, Kab. Selayar, Sulawesi Selatan.</h4>
+          <h4>Pelabuhan penyebrangan Pamatata adalah pelabuhan yang terletak di Desa Pamatata, Kec. Bontomatene, Kab. Selayar, Sulawesi Selatan.</h4>
           <br>
           <a href="#" class="btn btn-danger btn-raised btn-lg">
             <i class="material-icons">directions_ferry</i> &nbsp;&nbsp;Reservasi Tiket Kapal Anda
@@ -97,213 +97,180 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="section text-center section-informasi">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
-            <h2 class="title">Let&apos;s talk product</h2>
-            <h5 class="description">This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn&apos;t scroll to get here. Add a button if you want the user to see more.</h5>
+            <h2 class="title">Informasi Pelabuhan Pamatata</h2>
           </div>
         </div>
         <div class="features">
           <div class="row">
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-info">
-                  <i class="material-icons">chat</i>
+            <div class="col-sm-7">
+              <div class="card bg-warning pt-3">
+                <h4 class="card-title">Jadwal Keberangkatan Kapal</h4>
+                <div class="card-body">
+                  <table class="table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Kapal</th>
+                        <th scope="col">Tujuan</th>
+                        <th scope="col">Waktu Berangkat</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                      <tr>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <h4 class="info-title">Free Chat</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-success">
-                  <i class="material-icons">verified_user</i>
+            <div class="col-sm-5">
+              <div class="card bg-info pt-3">
+                <h4 class="card-title">Pengumuman</h4>
+                <div class="px-3">
+                  <hr style="border-color: #fff;">
                 </div>
-                <h4 class="info-title">Verified Users</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-danger">
-                  <i class="material-icons">fingerprint</i>
+                <div class="card-footer justify-content-center">
+                  <p>I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
+                  <!-- <b class="mt-4 mb-5"><i>Tidak ada pengumuman untuk saat ini</i></b> -->
                 </div>
-                <h4 class="info-title">Fingerprint</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="section text-center section-tentang">
-        <h2 class="title">Here is our team</h2>
-        <div class="team">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="team-player">
-                <div class="card card-plain">
-                  <div class="col-md-6 ml-auto mr-auto">
-                    <img src="users/assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                  </div>
-                  <h4 class="card-title">Gigi Hadid
-                    <br>
-                    <small class="card-description text-muted">Model</small>
-                  </h4>
-                  <div class="card-body">
-                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                      <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                    </div>
-                    <div class="card-footer justify-content-center">
-                      <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                      <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                      <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="team-player">
-                  <div class="card card-plain">
-                    <div class="col-md-6 ml-auto mr-auto">
-                      <img src="users/assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                    </div>
-                    <h4 class="card-title">Christian Louboutin
-                      <br>
-                      <small class="card-description text-muted">Designer</small>
-                    </h4>
-                    <div class="card-body">
-                      <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                        <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                      </div>
-                      <div class="card-footer justify-content-center">
-                        <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                        <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-linkedin"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="team-player">
-                    <div class="card card-plain">
-                      <div class="col-md-6 ml-auto mr-auto">
-                        <img src="users/assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                      </div>
-                      <h4 class="card-title">Kendall Jenner
-                        <br>
-                        <small class="card-description text-muted">Model</small>
-                      </h4>
-                      <div class="card-body">
-                        <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                          <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                          <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                          <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                          <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="section section-kontak">
-              <div class="row">
-                <div class="col-md-8 ml-auto mr-auto">
-                  <h2 class="text-center title">Work with us</h2>
-                  <h4 class="text-center description">Divide details about your product or agency work into parts. Write a few lines about each one and contact us about any further collaboration. We will responde get back to you in a couple of hours.</h4>
-                  <form class="contact-form">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Your Name</label>
-                          <input type="email" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Your Email</label>
-                          <input type="email" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleMessage" class="bmd-label-floating">Your Message</label>
-                      <textarea type="email" class="form-control" rows="4" id="exampleMessage"></textarea>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4 ml-auto mr-auto text-center">
-                        <button class="btn btn-primary btn-raised">
-                          Send Message
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+    </div>
+    <div class="section text-center section-tentang">
+      <h2 class="title">Tentang Pelabuhan Pamatata</h2>
+      <div class="team">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="team-player">
+              <div class="card card-plain">
+                <div class="card-body text-justify">
+                  <p class="card-description">
+                    <b>Pelabuhan penyeberangan Pamatata</b> adalah pelabuhan yang terletak di desa Pamatata, kecamatan Bontomatene, Kabupaten Kepulauan Selayar. Pelabuhan ini merupakan pintu gerbang utama memasuki daratan Kabupaten Kepulauan Selayar, Sulawesi Selatan jika melalui jalur laut dengan fasilitas penyeberangan berupa kapal feri. Menurut rencana pelabuhan ini akan disinggahi kapal yang berlayar dari arah wilayah timur menuju wilayah barat Indonesia, demikian juga sebaliknya. Perencanaan Kepulauan Selayar menjadi arus Timur-Barat Indonesia via laut, mengingatkan kita pada peta arus perdagangan kawasan kepulauan Nusantara beberapa abad yang lalu. Saat itu, Pulau Selayar menjadi pusat transit kapal-kapal saudagar dari berbagai penjuru. Hal itu ditandai dengan banyaknya situs barang antik di dasar laut di sekitar Kepulauan Selayar. Dan secara logika posisi Kepulauan Selayar memang sangat strategis menghubungkan timur dan barat, demikian juga wilayah utara dan selatan.
+                  </p>
+                  <p class="card-description">
+                    <b>Pelabuhan penyeberangan Pamatata</b> saat ini berfungsi sebagai pelabuhan transit kapal feri dengan rute pelayaran pelabuhan Bira - Pamatata - Pelabuhan penyeberangan Pattumbukang - Takabonerate - Pasimasunggu Timur - Pasilambena - NTT (Reog, Sikka). Untuk sementara, pelayaran itu direncanakan akan menggunakan kapal KMP. BELLIDA dan KMP. BONTOHARU. Sementara jadwal pelayaran direncanakan 1 kali dalam seminggu, berangkat setiap hari Kamis. Mengingat kondisi perairan Selayar yang tergolong ganas, maka pelayaran akan ditunda jika cuaca tidak memungkinkan.
+                    Menurut rencana, Dari Bira juga akan diadakan rute pelayaran tambahan yaitu Bira - Bau-Bau, Bira - Rawa Saban, Bira - Tuban, Bira - Karimunjawa, Bira - Pluan Laut, Bira - Ketapang - Dumai dengan kapal KMP. SANGKE PALLANGA. Jadwal keberangkatan dari Bira direncanakan 1 kali seminggu, setiap hari Selasa. Jadwal ini konon akan sering berubah sesuai kondisi serta keadaan penumpang yang akan berlayar ke tujuan tersebut.
+
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <footer class="footer footer-default">
-          <div class="container">
-            <nav class="float-left">
-              <ul>
-                <li>
-                  <a href="https://www.creative-tim.com/">
-                    Creative Tim
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/presentation">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/blog">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/license">
-                    Licenses
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright float-right">
-              &copy;
-              <script>
-                document.write(new Date().getFullYear())
-              </script>, made with <i class="material-icons">favorite</i> by
-              <a href="https://www.creative-tim.com/">Creative Tim</a> for a better web.
+      </div>
+    </div>
+    <div class="section section-kontak">
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+          <h2 class="text-center title">Hubungi Kami</h2>
+          <div class="row">
+            <div class="col-md-5 text-center">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Kontak</h4>
+                </div>
+                <div class="card-body pl-2">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <i class="material-icons">phone</i> +62821-9131-2813
+                    </li>
+                    <li class="list-group-item">
+                      <i class="material-icons">mail</i> pamatata.port@gmail.com
+                    </li>
+                    <li class="list-group-item text-left">
+                      <i class="material-icons">location_on</i> Pamatata, Kec. Bontomatene,<br><br>Kab. Selayar, Sul-Sel
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <form class="contact-form">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Name Lengkap</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Email</label>
+                      <input type="email" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleMessage" class="bmd-label-floating">Tulis Pesan</label>
+                  <textarea type="text" class="form-control" rows="4" id="exampleMessage"></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 ml-auto mr-auto text-center">
+                    <button class="btn btn-primary btn-raised">
+                      Kirim Pesan
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-        </footer>
-        <!--   Core JS Files   -->
-        <script src="users/assets/js/core/jquery.min.js" type="text/javascript"></script>
-        <script src="users/assets/js/core/popper.min.js" type="text/javascript"></script>
-        <script src="users/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-        <script src="users/assets/js/plugins/moment.min.js"></script>
-        <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-        <script src="users/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-        <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-        <script src="users/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-        <!--  Google Maps Plugin    -->
-        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-        <script src="users/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer footer-default">
+  <div class="container">
+    <div class="copyright float-right">
+      &copy;
+      <script>
+        document.write(new Date().getFullYear())
+      </script>, Pamatata Port Selayar
+    </div>
+  </div>
+</footer>
+<!--   Core JS Files   -->
+<script src="users/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="users/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="users/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="users/assets/js/plugins/moment.min.js"></script>
+<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+<script src="users/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="users/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<!--  Google Maps Plugin    -->
+<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+<script src="users/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 
-        <script>
-          $(document).ready(function() {
-            $('.nav-link').click(function(e) {
-              e.preventDefault();
-              var section = $(this).attr('data-target');
+<script>
+  $(document).ready(function() {
+    $('.nav-link').click(function(e) {
+      e.preventDefault();
+      var section = $(this).attr('data-target');
 
-              if ($(section).length != 0) {
-                $("html, body").animate({
-                  scrollTop: $(section).offset().top
-                }, 1000);
-              }            
-            });
-          });
-        </script>
-      </body>
+      if ($(section).length != 0) {
+        $("html, body").animate({
+          scrollTop: $(section).offset().top
+        }, 1000);
+      }            
+    });
+  });
+</script>
+</body>
 
-      </html>
+</html>

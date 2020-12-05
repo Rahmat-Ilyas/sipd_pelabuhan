@@ -1,7 +1,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            ©<?= date('Y') ?> All Rights Reserved - Pelabuhan Pamatata
+            ©<?= date('Y') ?> Pamatata Port
           </div>
           <div class="clearfix"></div>
         </footer>

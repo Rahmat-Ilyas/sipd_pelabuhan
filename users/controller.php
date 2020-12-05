@@ -1,8 +1,8 @@
 <?php 
 function plugins($status, $proses, $header) { ?>
-	<link rel="stylesheet" href="admin/vendors/bootstrap/dist/css/bootstrap.min.css">
-	<script src="admin/vendors/jquery/dist/jquery.min.js"></script>
-	<script src="admin/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+	<link rel="stylesheet" href="../admin/vendors/bootstrap/dist/css/bootstrap.min.css">
+	<script src="../admin/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="../admin/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 
 	<script>
 		$(document).ready(function($) {
@@ -29,9 +29,7 @@ function plugins($status, $proses, $header) { ?>
 	</script>
 <?php }
 
-require('config.php');
-
-plugins('success', 'tambah', 'data-kapal');
+require('../config.php');
 
 // ACTION ADD
 store($conn);

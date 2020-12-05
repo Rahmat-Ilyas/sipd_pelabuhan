@@ -83,7 +83,8 @@ if (!isset($_SESSION['login_admin'])) {
                     <li><a href="chartjs.html">Pengumuman</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-file-text-o"></i>Laaporan <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-envelope"></i> Pesan Masuk</span></a></li>
+                <li><a><i class="fa fa-file-text-o"></i>Laporan <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="fixed_sidebar.html">Laporan Data Penumpang</a></li>
                     <li><a href="fixed_footer.html">Laporan Transaksi</a></li>
