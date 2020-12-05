@@ -16,28 +16,28 @@ The above copyright notice and this permission notice shall be included in all c
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="users/assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="users/assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Kit by Creative Tim
+    Pelabuhan Pamatata Selayar
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+  <link href="users/assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
+  <link href="users/assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="landing-page sidebar-collapse">
+<body class="landing-page sidebar-collapse section-beranda">
   <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
         <a href="index.php" class="navbar-brand">
-          <span class="border rounded-circle p-2"><i class="fa fa-anchor"></i></span>
+          <span class="border rounded-circle p-2"><i class="material-icons">anchor</i></span>
           <span>Pamatata Port</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,43 +50,43 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="dropdown nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-home"></i> Beranda
+            <a href="#" class="nav-link" data-target=".section-beranda">
+              <i class="material-icons">home</i> Beranda
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" target="_blank">
-              <i class="fa fa-info-circle"></i> Informasi
+            <a class="nav-link" data-target=".section-informasi" href="#">
+              <i class="material-icons">info</i> Informasi
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" target="_blank">
-              <i class="fa fa-lightbulb-o"></i> Tentang
+            <a class="nav-link" data-target=".section-tentang" href="#">
+              <i class="material-icons">lightbulb</i> Tentang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" target="_blank">
-              <i class="fa fa-phone"></i> Hubungi Kami
+            <a class="nav-link" data-target=".section-kontak" href="#">
+              <i class="material-icons">phone</i> Hubungi Kami
             </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-primary btn-sm pt-2" href="login.php">
-              <i class="fa fa-user"></i> &nbsp;&nbsp;Login
+            <a class="btn btn-primary btn-sm pt-2" href="users/login.php">
+              <i class="material-icons">account_circle</i> Login
             </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/profile_city.jpg')">
+  <div class="page-header header-filter" data-parallax="true" style="background-image: url('users/assets/img/pamatata1.jpg')">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <h1 class="title">Your Story Starts With Us.</h1>
-          <h4>Every landing page needs a small description after the big bold title, that&apos;s why we added this text here. Add here all the information that can make you or your product create the first impression.</h4>
+          <h1 class="title">Pelabuhan Pamatata Kabupaten Selayar</h1>
+          <h4>Pelabuhan penyebrangan Pamatata adalah pelabuhan yang terletak di desa Pamatata, Kec. Bontomatene, Kab. Selayar, Sulawesi Selatan.</h4>
           <br>
-          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-danger btn-raised btn-lg">
-            <i class="fa fa-play"></i> Watch video
+          <a href="#" class="btn btn-danger btn-raised btn-lg">
+            <i class="material-icons">directions_ferry</i> &nbsp;&nbsp;Reservasi Tiket Kapal Anda
           </a>
         </div>
       </div>
@@ -94,7 +94,7 @@ The above copyright notice and this permission notice shall be included in all c
   </div>
   <div class="main main-raised">
     <div class="container">
-      <div class="section text-center">
+      <div class="section text-center section-informasi">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <h2 class="title">Let&apos;s talk product</h2>
@@ -133,7 +133,7 @@ The above copyright notice and this permission notice shall be included in all c
           </div>
         </div>
       </div>
-      <div class="section text-center">
+      <div class="section text-center section-tentang">
         <h2 class="title">Here is our team</h2>
         <div class="team">
           <div class="row">
@@ -141,7 +141,7 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="team-player">
                 <div class="card card-plain">
                   <div class="col-md-6 ml-auto mr-auto">
-                    <img src="assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                    <img src="users/assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                   </div>
                   <h4 class="card-title">Gigi Hadid
                     <br>
@@ -163,7 +163,7 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="team-player">
                   <div class="card card-plain">
                     <div class="col-md-6 ml-auto mr-auto">
-                      <img src="assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                      <img src="users/assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                     </div>
                     <h4 class="card-title">Christian Louboutin
                       <br>
@@ -184,7 +184,7 @@ The above copyright notice and this permission notice shall be included in all c
                   <div class="team-player">
                     <div class="card card-plain">
                       <div class="col-md-6 ml-auto mr-auto">
-                        <img src="assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                        <img src="users/assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                       </div>
                       <h4 class="card-title">Kendall Jenner
                         <br>
@@ -205,7 +205,7 @@ The above copyright notice and this permission notice shall be included in all c
                 </div>
               </div>
             </div>
-            <div class="section section-contacts">
+            <div class="section section-kontak">
               <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                   <h2 class="text-center title">Work with us</h2>
@@ -273,22 +273,37 @@ The above copyright notice and this permission notice shall be included in all c
               <script>
                 document.write(new Date().getFullYear())
               </script>, made with <i class="material-icons">favorite</i> by
-              <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a> for a better web.
+              <a href="https://www.creative-tim.com/">Creative Tim</a> for a better web.
             </div>
           </div>
         </footer>
         <!--   Core JS Files   -->
-        <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
-        <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
-        <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-        <script src="assets/js/plugins/moment.min.js"></script>
+        <script src="users/assets/js/core/jquery.min.js" type="text/javascript"></script>
+        <script src="users/assets/js/core/popper.min.js" type="text/javascript"></script>
+        <script src="users/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+        <script src="users/assets/js/plugins/moment.min.js"></script>
         <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-        <script src="assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="users/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
         <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-        <script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+        <script src="users/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
         <!--  Google Maps Plugin    -->
         <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-        <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+        <script src="users/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+
+        <script>
+          $(document).ready(function() {
+            $('.nav-link').click(function(e) {
+              e.preventDefault();
+              var section = $(this).attr('data-target');
+
+              if ($(section).length != 0) {
+                $("html, body").animate({
+                  scrollTop: $(section).offset().top
+                }, 1000);
+              }            
+            });
+          });
+        </script>
       </body>
 
       </html>

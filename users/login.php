@@ -42,8 +42,8 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Login</h4>
                 <div class="social-line">
-                  <a href="index.php" class="btn btn-link">
-                    <span class="border rounded-circle p-2"><i class="fa fa-anchor"></i></span>
+                  <a href="../index.php" class="btn btn-link">
+                    <span class="border rounded-circle p-2"><i class="material-icons">anchor</i></span>
                     <span>Pamatata Port</span>
                   </a>
                 </div>
@@ -53,45 +53,44 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="fa fa-user"></i>
+                      <i class="material-icons">mail</i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Username...">
+                  <input type="text" class="form-control" placeholder="Email...">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="fa fa-lock"></i>
+                      <i class="material-icons">lock_outline</i>
                     </span>
                   </div>
                   <input type="password" class="form-control" placeholder="Password...">
                 </div>
               </div>
-              <div class="footer text-center">
-                <div class="footer text-center mb-5">
-                  <div>
-                    <a href="#pablo" class="btn btn-primary mb-2">Login</a>
-                  </div>
-                  <span class="text-dark">Don't have an account? <a href="signin.php">Sign In</a></span>
+              <div class="footer text-center mb-4">
+                <div>
+                  <a href="#pablo" class="btn btn-primary mb-2">Login</a>
                 </div>
-              </form>
-            </div>
+                <span class="text-dark">Don't have an account? <a href="signin.php">Sign In</a></span>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
-    <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
-    <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-    <script src="assets/js/plugins/moment.min.js"></script>
-    <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-    <script src="assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-    <script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-    <!--  Google Maps Plugin    -->
-    <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-    <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
-  </body>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="assets/js/plugins/moment.min.js"></script>
+  <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+  <script src="assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+  <script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+  <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+</body>
 
-  </html>
+</html>
