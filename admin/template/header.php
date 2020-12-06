@@ -13,7 +13,7 @@ if (!isset($_SESSION['login_admin'])) {
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="images/favicon.ico" type="image/ico" />
+  <link rel="icon" href="images/anchor.png" type="image/ico" />
 
   <title>Admin SIPDP Pelabuhan Pamatata</title>
 
@@ -53,7 +53,7 @@ if (!isset($_SESSION['login_admin'])) {
       <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-anchor"></i> <span>Pamatata Port</span></a>
+            <a href="../index.php" class="site_title"><i class="fa fa-anchor"></i> <span>Pamatata Port</span></a>
           </div>
 
           <div class="clearfix"></div>

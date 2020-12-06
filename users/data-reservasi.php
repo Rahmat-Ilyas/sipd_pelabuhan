@@ -1,5 +1,8 @@
 <?php 
 require('template/header.php');
+
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status='Belum Lunas'");
+$reserv = mysqli_fetch_assoc($reservasi);
 ?>
 
 <div class="container bg-white pb-5">
@@ -21,13 +24,21 @@ require('template/header.php');
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Rahmat</td>
-            <td>Loli Yui</td>
-            <td>Yess</td>
-            <td>Oii</td>
-            <td>Oii</td>
-          </tr>
+          <?php if ($reserv) { ?>
+            <tr>
+              <td>Rahmat</td>
+              <td>Loli Yui</td>
+              <td>Yess</td>
+              <td>Oii</td>
+              <td>Oii</td>
+            </tr>
+          <?php } else { ?>
+            <tr class="text-center">
+              <td colspan="5">
+                <span>Anda belum melakukan Reservasi. <b><a href="reservasi.php">Reservasi sekarang</a></b></span>
+              </td>
+            </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>

@@ -1,23 +1,16 @@
-<!--
-=========================================================
-Material Kit - v2.0.7
-=========================================================
-
-Product Page: https://www.creative-tim.com/product/material-kit
-Copyright 2020 Creative Tim (https://www.creative-tim.com/)
-
-Coded by Creative Tim
-
-=========================================================
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+<?php 
+require('config.php');
+$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");
+$informasi = mysqli_query($conn, "SELECT * FROM tb_pengumuman");
+$info = mysqli_fetch_assoc($informasi);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="users/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="users/assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="users/assets/img/anchor.png">
+  <link rel="icon" type="image/png" href="users/assets/img/anchor.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Pelabuhan Pamatata Selayar
@@ -85,7 +78,7 @@ The above copyright notice and this permission notice shall be included in all c
           <h1 class="title">Pelabuhan Pamatata Kabupaten Selayar</h1>
           <h4>Pelabuhan penyebrangan Pamatata adalah pelabuhan yang terletak di Desa Pamatata, Kec. Bontomatene, Kab. Selayar, Sulawesi Selatan.</h4>
           <br>
-          <a href="#" class="btn btn-danger btn-raised btn-lg">
+          <a href="users/reservasi.php?from_home=true" class="btn btn-danger btn-raised btn-lg">
             <i class="material-icons">directions_ferry</i> &nbsp;&nbsp;Reservasi Tiket Kapal Anda
           </a>
         </div>
@@ -105,31 +98,26 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="col-sm-7">
               <div class="card bg-warning pt-3">
                 <h4 class="card-title">Jadwal Keberangkatan Kapal</h4>
-                <div class="card-body">
+                <div class="card-body text-left">
                   <table class="table">
                     <thead class="thead-light">
                       <tr>
                         <th scope="col">Kapal</th>
                         <th scope="col">Tujuan</th>
                         <th scope="col">Waktu Berangkat</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      <?php foreach ($kapal as $dta) { ?>
+                        <tr>
+                          <td><b><?= $dta['nama_kapal'] ?></b></td>
+                          <td><?= $dta['tujuan'] ? $dta['tujuan'] : '-' ?></td>
+                          <td><?= $dta['waktu_berangkat'] ? date('d/m/Y H:i', strtotime($dta['waktu_berangkat'])) : '-' ?></td>
+                          <td><?= $dta['status'] ? $dta['status'] : '-' ?></td>
+                        </tr>
+                        <?php 
+                      } ?>
                     </tbody>
                   </table>
                 </div>
@@ -141,9 +129,16 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="px-3">
                   <hr style="border-color: #fff;">
                 </div>
-                <div class="card-footer justify-content-center">
-                  <p>I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-                  <!-- <b class="mt-4 mb-5"><i>Tidak ada pengumuman untuk saat ini</i></b> -->
+                <div class="card-body text-justify">
+                  <?php if ($info['judul']) { ?>
+                    <h5 style="margin-top: -15px; margin-bottom: -5px;"><b><?= $info['judul'] ?></b></h5>
+                    <small class="text-white"><i><?= $info['waktu'] ?></i></small>
+                    <p class="mt-2"><?= $info['pengumuman'] ?></p>
+                    <?php 
+                  } else { ?>
+                    <h5 class="mt-4 mb-5 text-center"><b><i>Tidak ada pengumuman untuk saat ini</i></b></h5>
+                    <?php 
+                  } ?>
                 </div>
               </div>
             </div>
@@ -237,10 +232,7 @@ The above copyright notice and this permission notice shall be included in all c
 <footer class="footer footer-default">
   <div class="container">
     <div class="copyright float-right">
-      &copy;
-      <script>
-        document.write(new Date().getFullYear())
-      </script>, Pamatata Port Selayar
+      ©<?= date('Y') ?> All Rights Reserved - Pelabuhan Pamatata
     </div>
   </div>
 </footer>

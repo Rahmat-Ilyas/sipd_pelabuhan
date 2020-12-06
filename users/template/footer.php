@@ -1,11 +1,8 @@
- <footer class="footer footer-default fixed-bottom">
+ <footer class="footer footer-default" id="set-footer">
     <div class="container">
       <hr>
       <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, Pamatata Port Selayar
+        ©<?= date('Y') ?> All Rights Reserved - Pelabuhan Pamatata
       </div>
     </div>
   </footer>
@@ -21,5 +18,14 @@
   <!--  Google Maps Plugin    -->
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+
+  <script>
+  $(document).ready(function() {
+    var footer = $('#set-footer').offset().top;
+    if (footer < 500) {
+      $('#set-footer').addClass('fixed-bottom');
+    }
+  });
+</script>
 </body>
 </html>

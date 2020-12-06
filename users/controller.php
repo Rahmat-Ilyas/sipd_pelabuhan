@@ -1,5 +1,5 @@
 <?php 
-function plugins($status, $proses, $header) { ?>
+function plugins($status, $message, $header) { ?>
 	<link rel="stylesheet" href="../admin/vendors/bootstrap/dist/css/bootstrap.min.css">
 	<script src="../admin/vendors/jquery/dist/jquery.min.js"></script>
 	<script src="../admin/vendors/sweetalert2/sweetalert2.all.min.js"></script>
@@ -9,7 +9,7 @@ function plugins($status, $proses, $header) { ?>
 			<?php if ($status == 'success') { ?>
 				Swal.fire({
 					title: 'Berhasil Diproses',
-					text: 'Data baru berhasil di<?= $proses ?>',
+					text: '<?= $message ?>',
 					type: 'success',
 					onClose: () => {
 						location.href = '<?= $header ?>.php';
@@ -18,7 +18,7 @@ function plugins($status, $proses, $header) { ?>
 			<?php } else { ?>
 				Swal.fire({
 					title: 'Gagal Diproses',
-					text: 'Data gagal di<?= $proses ?>',
+					text: '<?= $message ?>',
 					type: 'error',
 					onClose: () => {
 						location.href = '<?= $header ?>.php';
@@ -34,17 +34,26 @@ require('../config.php');
 // ACTION ADD
 store($conn);
 function store($conn) {
-	// TAMBAH KALAP
-	if (isset($_POST['tambah_kapal'])) {
-		$nama_kapal = $_POST['nama_kapal'];
-		$harga = $_POST['harga'];
-		$keterangan = $_POST['keterangan'];
-		mysqli_query($conn, "INSERT INTO tb_kapal VALUES (NULL, '$nama_kapal', '$harga', '$keterangan')");
+	// TAMBAH USER
+	if (isset($_POST['signup'])) {
+		$nama = $_POST['nama'];
+		$umur = $_POST['umur'];
+		$alamat = $_POST['alamat'];
+		$jenis_kelamin = $_POST['jenis_kelamin'];
+		$telepon = $_POST['telepon'];
+		$email = $_POST['email'];
+		$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		mysqli_query($conn, "INSERT INTO tb_users VALUES (NULL, '$nama', '$umur', '$alamat', '$jenis_kelamin', '$telepon', '$email', '$password')");
 
 		if (mysqli_affected_rows($conn) > 0) {
-			plugins('success', 'tambah', 'data-kapal');
+			$_SESSION['login_user'] = $password;
+			$_SESSION['user_id'] = mysqli_insert_id($conn);
+
+			$message = 'Akun anda berhasil dibuat';
+			plugins('success', $message, 'panel');
 		} else {
-			plugins('error', 'tambah', 'data-kapal');
+			$message = 'Terjadi Kesalahan Saat Mendaftar';
+			plugins('error', $message, 'signin');
 		}
 	}
 }

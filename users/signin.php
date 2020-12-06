@@ -1,23 +1,15 @@
-<!--
-=========================================================
-Material Kit - v2.0.7
-=========================================================
+<?php 
+require('../config.php');
 
-Product Page: https://www.creative-tim.com/product/material-kit
-Copyright 2020 Creative Tim (https://www.creative-tim.com/)
-
-Coded by Creative Tim
-
-=========================================================
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+if (isset($_SESSION['login_user'])) header("location: panel.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/anchor.png">
+  <link rel="icon" type="image/png" href="assets/img/anchor.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Sign In - Pamatata Port
@@ -38,7 +30,7 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="row">
         <div class="col-lg-8 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
-            <form class="form" method="" action="">
+            <form class="form" method="POST" action="controller.php">
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Sign In</h4>
                 <div class="social-line">
@@ -53,37 +45,37 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group mb-0">
-                      <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap..." autocomplete="off">
+                      <input type="text" name="nama" class="form-control" required="" placeholder="Nama Lengkap..." autocomplete="off">
                     </div>
                     <div class="form-group mb-0">
-                      <textarea class="form-control" rows="4" placeholder="Alamat..." autocomplete="off"></textarea>
+                      <textarea class="form-control" required="" name="alamat" rows="4" placeholder="Alamat..." autocomplete="off"></textarea>
                     </div>
                     <div class="form-group mb-0">
-                      <input type="number" name="umur" class="form-control" placeholder="Umur..." autocomplete="off">
+                      <input type="number" name="umur" class="form-control" required="" placeholder="Umur..." autocomplete="off">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-0 mt-4">
-                      <select  class="form-control">
-                        <option>Jenis Kelamin...</option>
+                      <select  class="form-control" required="" name="jenis_kelamin">
+                        <option value="">Jenis Kelamin...</option>
                         <option value="Laki-laki">Laki-laki</option>
                         <option value="Perempuan">Perempuan</option>
                       </select>
                     </div>
                     <div class="form-group mb-0">
-                      <input type="number" name="telepon" class="form-control" placeholder="Telepon..." autocomplete="off">
+                      <input type="number" name="telepon" class="form-control" required="" placeholder="Telepon..." autocomplete="off">
                     </div>
                     <div class="form-group mb-0">
-                      <input type="email" name="email" class="form-control" placeholder="Email..." autocomplete="off">
+                      <input type="email" name="email" class="form-control" required="" placeholder="Email..." autocomplete="off">
                     </div>
                     <div class="form-group">
-                      <input type="password" name="password" class="form-control" placeholder="Password..." autocomplete="off">
+                      <input type="password" name="password" class="form-control" required="" placeholder="Password..." autocomplete="off">
                     </div>
                   </div>
                 </div>
                 <div class="mb-4 mt-2">
                   <div class="text-center">
-                    <a href="#pablo" class="btn btn-primary mb-2">Sign In</a>
+                    <button type="submit" name="signup" class="btn btn-primary mb-2">Sign In</button>
                   </div>
                   <div class="text-center">
                     <span class="text-dark">Already registered? <a href="login.php">Login</a></span>

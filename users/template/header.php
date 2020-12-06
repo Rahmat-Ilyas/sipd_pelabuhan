@@ -1,10 +1,22 @@
+<?php 
+require('../config.php');
+
+if (!isset($_SESSION['login_user'])) {
+  header("location: login.php?from_home=1");
+}
+
+$user_id = $_SESSION['user_id'];
+$get_user = mysqli_query($conn, "SELECT * FROM tb_users WHERE id=$user_id");
+$user = mysqli_fetch_assoc($get_user);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/anchor.png">
+  <link rel="icon" type="image/png" href="assets/img/anchor.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Panel User - Pelabuhan Pamatata Selayar
@@ -61,11 +73,11 @@
           <li class="dropdown nav-item">
             <a href="javascript:;" class="dropdown-toggle nav-link" data-toggle="dropdown">
               <i class="material-icons">account_circle</i>
-              <span>Rahmat Ilyas</span>
+              <span><?= $user['nama'] ?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="javascript:;" class="dropdown-item">Profile</a>
-              <a href="javascript:;" class="dropdown-item">Logout</a>
+              <a href="profile.php" class="dropdown-item">Profile</a>
+              <a href="logout.php" class="dropdown-item">Logout</a>
             </div>
           </li>
         </ul>
