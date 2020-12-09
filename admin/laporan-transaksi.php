@@ -3,36 +3,47 @@ require('template/header.php');
 
 if (isset($_POST['view_data'])) {
 	if ($_POST['laporan'] == 'harian') {
-		$result = get_data($_POST['status'], 'harian', date('dmy', strtotime($_POST['tanggal'])));
-		$title = "Laporan Data Penumpang per Tanggal ".date('d/m/Y', strtotime($_POST['tanggal']));
+		$result = get_data('harian', date('dmy', strtotime($_POST['tanggal'])));
+		$title = "Laporan Data Transaksi per Tanggal ".date('d/m/Y', strtotime($_POST['tanggal']));
 		$_POST['bulan'] = date('Y-m');
 	} else if ($_POST['laporan'] == 'bulanan') {
-		$result = get_data($_POST['status'], 'bulanan', date('m', strtotime($_POST['bulan'])));
-		$title = "Laporan Data Penumpang per Bulan ".date('m/Y', strtotime($_POST['bulan']));
+		$result = get_data('bulanan', date('m', strtotime($_POST['bulan'])));
+		$title = "Laporan Data Transaksi per Bulan ".date('m/Y', strtotime($_POST['bulan']));
 		$_POST['tanggal'] = date('Y-m-d');
 	}
 } else {
-	$result = get_data('semua', 'harian', date('dmy'));
-	$title = "Laporan Data Penumpang per Tanggal ".date('d/m/Y');
+	$result = get_data('harian', date('dmy'));
+	$title = "Laporan Data Transaksi per Tanggal ".date('d/m/Y');
 }
 
-function get_data($status, $laporan, $waktu) {
+function get_data($laporan, $waktu) {
 	global $conn;
 	$result = [];
-	if ($status == 'semua') $status = "status!='Batal'";
-	else if ($status == 'panding') $status = "status='Panding'";
-	else if ($status == 'selesai') $status = "status='Selesai'";
 
-	$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE ".$status." ORDER BY id DESC");
-	foreach ($penumpang as $png) {
+	$transaksi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Lunas' ORDER BY id DESC");
+	foreach ($transaksi as $trs) {
+		$kd = $trs['kd_transaksi'];
+		$jum_pnmpng = 0;
+		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd'");
+		foreach ($penumpang as $png) {
+			$jum_pnmpng = $jum_pnmpng + 1;
+			$tanggal_daftar = $png['tanggal_daftar'];
+		}
+		$user_id = $trs['user_id'];
+		$get_user = mysqli_query($conn, "SELECT * FROM tb_users WHERE id='$user_id'");
+		$user = mysqli_fetch_assoc($get_user);
+
 		if ($laporan == 'harian') {
-			$tgl_daftar = date('dmy', strtotime($png['tanggal_daftar']));
+			$tgl_daftar = date('dmy', strtotime($tanggal_daftar));
 		} else if ($laporan == 'bulanan') {
-			$tgl_daftar = date('m', strtotime($png['tanggal_daftar']));
+			$tgl_daftar = date('m', strtotime($tanggal_daftar));
 		}
 
 		if ($tgl_daftar == $waktu) {
-			$result[] = $png;
+			$trs['penumpang'] = $jum_pnmpng;
+			$trs['tanggal_daftar'] = $tanggal_daftar;
+			$trs['nama'] = $user['nama'];
+			$result[] = $trs;
 		}
 
 	}
@@ -64,14 +75,6 @@ function get_data($status, $laporan, $waktu) {
 												<span><b>Data Berdasarkan:</b></span>
 											</div>
 											<div class="col-md-2 form-group">
-												<label>Status</label>
-												<select class="form-control" required="" name="status" style="font-size: 12px;" id="status">
-													<option value="semua">Semua Data</option>
-													<option value="panding">Panding</option>
-													<option value="selesai">Selesai</option>
-												</select>
-											</div>
-											<div class="col-md-2 form-group">
 												<label>Laporan</label>
 												<select class="form-control" required="" name="laporan" style="font-size: 12px;" id="laporan">
 													<option value="harian">Harian</option>
@@ -101,35 +104,27 @@ function get_data($status, $laporan, $waktu) {
 											<tr>
 												<th width="10">No</th>
 												<th>Tanggal</th>
-												<th width="100">Nomor Tiket</th>
+												<th width="100">KD Transaksi</th>
 												<th>Nama</th>
-												<th>Kategori</th>
-												<th>Kapal</th>
-												<th>Tujuan</th>
-												<th>Status</th>
+												<th>Penumpang</th>
+												<th>Hatga Tiket</th>
+												<th>Kendaraan</th>
+												<th>Lainnya</th>
+												<th>Total</th>
 											</tr>
 										</thead>
 										<tbody>
-											<?php $no = 1; foreach ($result as $dta) { 
-												$kapal_id = $dta['kapal_id'];
-												$get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
-												$kpl = mysqli_fetch_assoc($get_kapal); ?>
+											<?php $no = 1; foreach ($result as $dta) { ?>
 												<tr>
 													<td><?= $no; ?></td>
 													<td><?= date('d/m/Y', strtotime($dta['tanggal_daftar'])); ?></td>
-													<td><?= $dta['nomor_tiket']; ?></td>
+													<td><?= $dta['kd_transaksi']; ?></td>
 													<td><?= $dta['nama']; ?></td>
-													<td><?= $dta['kategori']; ?></td>
-													<td><?= $kpl['nama_kapal']; ?></td>
-													<td><?= $dta['tujuan']; ?></td>
-													<td class="text-center">
-														<?php 
-														if ($dta['status'] == 'Selesai') $color = 'success'; 
-														else if ($dta['status'] == 'Panding') $color = 'warning'; 
-														else if ($dta['status'] == 'Batal') $color = 'danger'; 
-														?>
-														<span class="badge badge-pill badge-<?= $color ?>"><?= $dta['status'] ?></span>
-													</td>
+													<td><?= $dta['penumpang']; ?> Orang</td>
+													<td>Rp. <?= $dta['total_harga_tiket']; ?></td>
+													<td>Rp. <?= $dta['biaya_kendaraan']; ?></td>
+													<td>Rp. <?= $dta['biaya_lainnya']; ?></td>
+													<td>Rp. <?= $dta['total_harga']; ?></td>
 												</tr>
 												<?php $no = $no + 1; 
 											} ?>
@@ -169,7 +164,6 @@ require('template/footer.php');
 			}
 		});
 
-		$('#status').val("<?= $_POST ? $_POST['status'] : 'semua' ?>");
 		$('#laporan').val("<?= $_POST ? $_POST['laporan'] : 'harian' ?>");
 		$('#bulan').val("<?= $_POST ? $_POST['bulan'] : date('Y-m') ?>");
 		$('#bulan-val').val("<?= $_POST ? $_POST['bulan'] : date('Y-m') ?>");

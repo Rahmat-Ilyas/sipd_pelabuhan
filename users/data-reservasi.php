@@ -64,7 +64,7 @@ if ($reserv) {
             </tr>
           <?php } else { ?>
             <tr class="text-center">
-              <td colspan="6">
+              <td colspan="7">
                 <span>Anda belum melakukan Reservasi. <b><a href="reservasi.php">Reservasi sekarang</a></b></span>
               </td>
             </tr>

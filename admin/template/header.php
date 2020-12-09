@@ -123,7 +123,7 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
                   <ul class="nav child_menu">
                     <li><a href="laporan-penumpang.php">Laporan Data Penumpang</a></li>
                     <li><a href="laporan-kendaraan.php">Laporan Data Kendaraan</a></li>
-                    <li><a href="fixed_footer.html">Laporan Transaksi</a></li>
+                    <li><a href="laporan-transaksi.php">Laporan Transaksi</a></li>
                   </ul>
                 </li>
               </ul>

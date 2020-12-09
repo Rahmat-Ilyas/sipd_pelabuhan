@@ -51,8 +51,9 @@ foreach (array_unique($kd_trns) as $kd) {
 												<th>Kendaraan</th>
 												<th>Kapal</th>
 												<th>Tujuan</th>
-												<th>Biaya Transaksi</th>
+												<th>Transaksi</th>
 												<th>Status</th>
+												<th width="50">Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -104,6 +105,14 @@ foreach (array_unique($kd_trns) as $kd) {
 														else if ($status == 'Batal') $color = 'danger'; 
 														?>
 														<span class="badge badge-pill badge-<?= $color ?>"><?= $status ?></span>
+													</td>
+													<td>
+														<?php 
+														if ($status == 'Selesai') { ?>
+															<a href="" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
+														<?php } else { ?>
+															<a href="" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
+														<?php } ?>
 													</td>
 												</tr>
 												<?php $no = $no + 1; 

@@ -17,7 +17,7 @@ foreach (array_unique($kd_trns) as $kd) {
 	$kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE kd_pendaftaran='$kd'");
 	$res = mysqli_fetch_assoc($kendaraan);
 	if ($res) {
-		$kpl_id = $png['kapal_id'];
+		$kpl_id = $res['kapal_id'];
 		$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kpl_id'");
 		$kpl = mysqli_fetch_assoc($kapal);
 		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd'");
@@ -78,7 +78,7 @@ foreach (array_unique($kd_trns) as $kd) {
 													<td><?= $dta['nama_sopir']; ?></td>
 													<td><?= $dta['merek_kendaraan']; ?></td>
 													<td><?= $dta['nomor_kendaraan']; ?></td>
-													<td><?= $kpl['nama_kapal']; ?></td>
+													<td><?= $dta['nama_kapal']; ?></td>
 													<td><?= $dta['tujuan']; ?></td>
 													<td class="text-center">
 														<?php 
