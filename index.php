@@ -3,6 +3,7 @@ require('config.php');
 $kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");
 $informasi = mysqli_query($conn, "SELECT * FROM tb_pengumuman");
 $info = mysqli_fetch_assoc($informasi);
+$user = null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,11 +63,28 @@ $info = mysqli_fetch_assoc($informasi);
               <i class="material-icons">phone</i> Hubungi Kami
             </a>
           </li>
-          <li class="nav-item">
-            <a class="btn btn-primary btn-sm pt-2" href="users/login.php">
-              <i class="material-icons">account_circle</i> Login
-            </a>
-          </li>
+          <?php if (isset($_SESSION['login_user'])) {
+            $user_id = $_SESSION['user_id'];
+            $get_user = mysqli_query($conn, "SELECT * FROM tb_users WHERE id=$user_id");
+            $user = mysqli_fetch_assoc($get_user);
+            ?>
+            <li class="dropdown nav-item">
+              <a href="" class="btn btn-primary btn-sm dropdown-toggle pt-2" data-toggle="dropdown">
+                <i class="material-icons">account_circle</i>
+                <span><?= $user['nama'] ?></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="users/profile.php" class="dropdown-item">Profile</a>
+                <a href="users/logout.php" class="dropdown-item">Logout</a>
+              </div>
+            </li>
+          <?php } else { ?>
+            <li class="nav-item">
+              <a class="btn btn-primary btn-sm pt-2" href="users/login.php">
+                <i class="material-icons">account_circle</i> Login
+              </a>
+            </li>
+          <?php } ?>
         </ul>
       </div>
     </div>
@@ -132,7 +150,7 @@ $info = mysqli_fetch_assoc($informasi);
                 <div class="card-body text-justify">
                   <?php if ($info['judul']) { ?>
                     <h5 style="margin-top: -15px; margin-bottom: -5px;"><b><?= $info['judul'] ?></b></h5>
-                    <small class="text-white"><i><?= $info['waktu'] ?></i></small>
+                    <small class="text-white"><i><?= date('d/m/Y H:i', strtotime($info['waktu'])) ?></i></small>
                     <p class="mt-2"><?= $info['pengumuman'] ?></p>
                     <?php 
                   } else { ?>
@@ -195,28 +213,28 @@ $info = mysqli_fetch_assoc($informasi);
               </div>
             </div>
             <div class="col-md-7">
-              <form class="contact-form">
+              <form class="contact-form" method="POST" action="users/controller.php">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="bmd-label-floating">Name Lengkap</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="nama" value="<?= $user ? $user['nama'] : ''; ?>">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
+                      <input type="email" class="form-control" name="email" value="<?= $user ? $user['email'] : ''; ?>">
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="exampleMessage" class="bmd-label-floating">Tulis Pesan</label>
-                  <textarea type="text" class="form-control" rows="4" id="exampleMessage"></textarea>
+                  <textarea type="text" class="form-control" rows="4" id="exampleMessage" name="pesan"></textarea>
                 </div>
                 <div class="row">
                   <div class="col-md-4 ml-auto mr-auto text-center">
-                    <button class="btn btn-primary btn-raised">
+                    <button type="submit" name="kirim_pesan" class="btn btn-primary btn-raised">
                       Kirim Pesan
                     </button>
                   </div>

@@ -1,7 +1,25 @@
 <?php 
 require('template/header.php');
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status='Belum Lunas'");
+$reserv = mysqli_fetch_assoc($reservasi);
+
+if ($reserv) {
+  header("Location: controller.php?reservasi_exits=true");
+}
 
 $kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");
+$golongan = mysqli_query($conn, "SELECT * FROM tb_golongan ORDER BY golongan ASC");
+
+$option = ''; 
+foreach ($kapal as $dta) { 
+  if ($dta['status'] == 'Tidak Beroprasi') {
+    $option .= '<option value="'.$dta['id'].'" disabled>'.$dta['nama_kapal'].' ('.$dta['status'].')</option>';
+  } else if ($dta['status'] != 'Sandar') {
+    $option .= '<option value="'.$dta['id'].'" disabled>'.$dta['nama_kapal'].' Tujuan '.$dta['tujuan'].' ('.$dta['status'].')</option>';
+  } else {
+    $option .= '<option value="'.$dta['id'].'">'.$dta['nama_kapal'].' Tujuan '.$dta['tujuan'].' ('.$dta['status'].')</option>';
+  }
+}
 ?>
 
 <div class="container bg-white pb-5">
@@ -33,66 +51,117 @@ $kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");
               </ul>
             </div>
             <div class="col-md-9">
-              <div class="tab-content">
-                <div class="tab-pane active show" id="penumpang">
-                  <div class="container">
-                    <div class="row">
-                      <h4 class="col-md-6"><u>Input Data Penumpang</u></h4>
-                      <b class="col-md-6 text-right mt-3">No. Regis: REG-099686443</b>                      
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Nomor Tiket</label>
-                      <input type="text" class="form-control bg-white" placeholder="Nomor Tiket..." value="233362123" readonly="">
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Pilih Kapal</label>
-                      <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">
-                        <?php
-                        $option = ''; 
-                        foreach ($kapal as $dta) { 
-                          if ($dta['status'] == 'Tidak Beroprasi') {
-                            $option .= '<option value="'.$dta['id'].'" disabled>'.$dta['nama_kapal'].' ('.$dta['status'].')</option>';
-                          } else if ($dta['status'] != 'Sandar') {
-                            $option .= '<option value="'.$dta['id'].'" disabled>'.$dta['nama_kapal'].' Tujuan '.$dta['tujuan'].' ('.$dta['status'].')</option>';
-                          } else {
-                            $option .= '<option value="'.$dta['id'].'">'.$dta['nama_kapal'].' Tujuan '.$dta['tujuan'].' ('.$dta['status'].')</option>';
-                          }
-                        } ?>
-                        <!-- $tujuan = $dta['tujuan'] ? $dta['tujuan'] : '<i>Tidak Beroprasi</i>'; ?> -->
-                        <option>-- Pilih Kapal --</option>
-                        <?= $option ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Nama</label>
-                      <input type="text" class="form-control" placeholder="Masukkan Nama...">
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Jenis Kelamin</label>
-                      <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">
-                        <option>-- Jenis Kelami --</option>
-                        <option>Laki-laki</option>
-                        <option>Perempuan</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Umur</label>
-                      <input type="number" class="form-control" placeholder="Masukkan Umur...">
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label">Alamat</label>
-                      <textarea class="form-control" rows="3" placeholder="Masukkan Alamat..."></textarea>
+              <form method="POST" action="controller.php" id="form-reservasi">
+                <div class="tab-content">
+                  <div class="tab-pane active show" id="penumpang">
+                    <div class="container">
+                      <div class="row">
+                        <h4 class="col-md-6"><u>Input Data Penumpang</u></h4>
+                        <b class="col-md-6 text-right mt-3">No. Regis: <span id="no-regis"></span></b>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Pilih Kapal</label>
+                        <input type="hidden" name="kd_pendaftaran" id="val-regis">
+                        <input type="hidden" name="user_id" value="<?= $user_id ?>">
+                        <select class="form-control" name="kapal_id" required="" id="kapal_id">
+                          <option value="">-- Pilih Kapal --</option>
+                          <?= $option ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Jumlah Penumpang</label>
+                        <input type="number" class="form-control" value="1" id="jmlh_penumpang" data-toggle="popover" data-placement="top" data-content="Jumlah penumpang tidak boleh melebihi 5 orang" data-container="body" placeholder="Jumlah Penumpang..." required="">
+                      </div>
+                      <div class="" id="this-form">
+
+                      </div>
                     </div>
                   </div>
+                  <div class="tab-pane" id="kendaraan">
+                    <div class="container">
+                      <div class="row">
+                        <h4 class="col-md-6"><u>Input Data Kendaraan</u></h4>
+                        <b class="col-md-6 text-right mt-3">No. Regis: <span id="no-regis1"></span></b>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Nomor Tiket Kendaraan</label>
+                        <input type="text" class="form-control bg-white" placeholder="Nomor Tiket Kendaraan..." name="no_tiket_kendaraan" id="tiket-kendaraan" readonly="">
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Golongan Kendaraan 
+                          <a href="#" class="text-secondary" data-toggle="modal" data-target="#infoGolongan"><i class="material-icons mb-3" style="font-size: 16px;">info</i></a>
+                        </label>
+                        <select class="form-control" name="golongan_id" id="golongan">
+                          <option value="">-- Pilih Golongan --</option>
+                          <?php foreach ($golongan as $gol) { ?>
+                            <option value="<?= $gol['id'] ?>"><?= $gol['golongan'].' ('.$gol['jenis_kendaraan'].')' ?></option>
+                            <?php 
+                          } ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Nama Sopir/Pengendara</label>
+                        <input type="text" class="form-control" placeholder="Masukkan Nama..." name="nama_sopir" autocomplete="off" id="nama_sopir" value="<?= $user['nama'] ?>">
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Merek Kendaraan</label>
+                        <input type="text" class="form-control" placeholder="Masukkan Merek..." name="merek_kendaraan" autocomplete="off" id="merek_kendaraan">
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Nomor Kendaraan</label>
+                        <input type="text" class="form-control" placeholder="Masukkan Nomor..." name="nomor_kendaraan" autocomplete="off" id="nomor_kendaraan">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" name="store_reservasi" class="btn btn-primary ml-2" id="submit-form"><i class="material-icons">input</i> &nbsp;&nbsp;Lanjutkan Reservasi</button>
                 </div>
-                <div class="tab-pane" id="kendaraan">
-                  Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                  <br><br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal Info Golongan -->
+<div class="modal fade" id="infoGolongan" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detail Golongan Kendaraan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 14px;">
+          <thead>
+            <tr>
+              <th style="width: 20px;">No</th>
+              <th>Nomor Golongan</th>
+              <th>Jenis Kendaraan</th>
+              <th>Harga</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $no = 1; foreach ($golongan as $dta) { ?>
+              <tr>
+                <td><?= $no; ?></td>
+                <td><?= $dta['golongan']; ?></td>
+                <td><?= $dta['jenis_kendaraan']; ?></td>
+                <td>Rp. <?= $dta['harga']; ?></td>
+                <td><?= $dta['keterangan']; ?></td>
+              </tr>
+              <?php $no = $no + 1; 
+            } ?>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -105,5 +174,139 @@ require('template/footer.php');
 <script>
   $(document).ready(function() {
     $('#reservasi').addClass('active');
+
+    var form_content = $('#form-content').html();
+    var one_more_content = $('#one-more').html();
+    one_only();
+
+    $(document).on('keyup click', '#jmlh_penumpang', function(e) {
+      value = $(this).val();
+      kapal_id = $('#kapal_id').val();
+
+      if (!kapal_id) {
+        $('#kapal_id').focus();
+        Swal.fire({
+          text: 'Pilih kapal terlebih dahulu',
+          type: 'warning',
+          timer: 2000,
+        });
+      }
+
+      if (value <= 0 && value != '') {
+        $(this).val('1');
+        $(this).popover('hide');
+        one_only();
+      } else if (value > 5) {
+        $(this).val('5');
+        $(this).popover('show');
+        one_more(5);
+      } else {
+        $(this).popover('hide');
+        if (value == 1 || value == '') {
+          one_only();
+        } else {
+          one_more(value);
+        }
+      }
+    });
+
+    $('#kapal_id').change(function() {
+      one_only();
+      tiket_kendaraan();
+      $('#jmlh_penumpang').val('1');
+    });
+
+    $('#golongan').change(function() {
+      value = $(this).val();
+      if (value == '') {
+        $('#nama_sopir').removeAttr('required');
+        $('#merek_kendaraan').removeAttr('required');
+        $('#nomor_kendaraan').removeAttr('required');
+      }
+      else {
+        $('#nama_sopir').attr('required', '');
+        $('#merek_kendaraan').attr('required', '');
+        $('#nomor_kendaraan').attr('required', '');
+      }
+    });
+
+    $('#submit-form').click(function(event) {
+      setTimeout(function() {
+        Swal.fire({
+          title: 'Lengkapi Data',
+          text: 'Pastikan semua form telah di lengkapi',
+          type: 'warning',
+          timer: 2000,
+        });
+      }, 1000);
+    });
+
+    // Function Area
+    function one_only() {
+      var kapal_id = $('#kapal_id').val();
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          one_only: true,
+          user_id: <?= $user_id ?>, 
+          kapal_id: kapal_id 
+        },
+        success : function(data) {
+          $('#this-form').html(data);
+        }
+      });
+    }
+
+    function one_more(jum) {
+      var kapal_id = $('#kapal_id').val();
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          one_more: true, 
+          user_id: <?= $user_id ?>, 
+          kapal_id: kapal_id,
+          jum_pnmpng: jum
+        },
+        success : function(data) {
+          $('#this-form').html(data);
+        }
+      });
+    }
+
+    no_regis();
+    function no_regis() {
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          no_regis: true, 
+          user_id: <?= $user_id ?>
+        },
+        success : function(data) {
+          $('#no-regis').html(data);
+          $('#no-regis1').html(data);
+          $('#val-regis').val(data);
+        }
+      });
+    }
+
+    tiket_kendaraan();
+    function tiket_kendaraan() {
+      var kapal_id = $('#kapal_id').val();
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          tiket_kendaraan: true, 
+          user_id: <?= $user_id ?>,
+          kapal_id: kapal_id
+        },
+        success : function(data) {
+          $('#tiket-kendaraan').val(data);
+        }
+      });
+    }
   });  
 </script>

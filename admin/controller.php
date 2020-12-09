@@ -9,17 +9,26 @@ function plugins($status, $proses, $header) { ?>
 			<?php if ($status == 'success') { ?>
 				Swal.fire({
 					title: 'Berhasil Diproses',
-					text: 'Data baru berhasil di<?= $proses ?>',
+					text: 'Data berhasil di<?= $proses ?>',
 					type: 'success',
 					onClose: () => {
 						location.href = '<?= $header ?>.php';
 					}
 				});
-			<?php } else { ?>
+			<?php } else if ($status == 'error') { ?>
 				Swal.fire({
 					title: 'Gagal Diproses',
 					text: 'Data gagal di<?= $proses ?>',
 					type: 'error',
+					onClose: () => {
+						location.href = '<?= $header ?>.php';
+					}
+				});
+			<?php } else if ($status == 'warning') { ?>
+				Swal.fire({
+					title: 'Lengkapi Data',
+					text: 'Lengkapi semua data yang di minta',
+					type: 'warning',
 					onClose: () => {
 						location.href = '<?= $header ?>.php';
 					}
@@ -39,12 +48,42 @@ function store($conn) {
 		$nama_kapal = $_POST['nama_kapal'];
 		$harga = $_POST['harga'];
 		$keterangan = $_POST['keterangan'];
-		mysqli_query($conn, "INSERT INTO tb_kapal VALUES (NULL, '$nama_kapal', '$harga', '$keterangan')");
+		mysqli_query($conn, "INSERT INTO tb_kapal VALUES (NULL, '$nama_kapal', '$harga', '$keterangan', NULL, NULL, 'Tidak Beroprasi')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			plugins('success', 'tambah', 'data-kapal');
 		} else {
 			plugins('error', 'tambah', 'data-kapal');
+		}
+	}
+
+	// TAMBAH GOLONGAN
+	if (isset($_POST['tambah_golongan'])) {
+		$golongan = $_POST['golongan'];
+		$jenis_kendaraan = $_POST['jenis_kendaraan'];
+		$harga = $_POST['harga'];
+		$keterangan = $_POST['keterangan'];
+		mysqli_query($conn, "INSERT INTO tb_golongan VALUES (NULL, '$golongan', '$jenis_kendaraan', '$harga', '$keterangan')");
+
+		if (mysqli_affected_rows($conn) > 0) {
+			plugins('success', 'tambah', 'golongan-kendaraan');
+		} else {
+			plugins('error', 'tambah', 'golongan-kendaraan');
+		}
+	}
+
+	// TAMBAH KATEGORI PENUMPANG
+	if (isset($_POST['add_kategori_pnmpng'])) {
+		$kategori = $_POST['kategori'];
+		$from_age = $_POST['from_age'];
+		$to_age = $_POST['to_age'];
+		$harga = $_POST['harga'];
+		mysqli_query($conn, "INSERT INTO tb_harga VALUES (NULL, '$kategori', '$from_age', '$to_age', '$harga')");
+
+		if (mysqli_affected_rows($conn) > 0) {
+			plugins('success', 'tambah', 'kategori-harga');
+		} else {
+			plugins('error', 'tambah', 'kategori-harga');
 		}
 	}
 }
@@ -66,6 +105,111 @@ function update($conn) {
 			plugins('error', 'edit', 'data-kapal');
 		}
 	}
+
+	// EDITE GOLONGAN
+	if (isset($_POST['edit_golongan'])) {
+		$id = $_POST['id'];
+		$golongan = $_POST['golongan'];
+		$jenis_kendaraan = $_POST['jenis_kendaraan'];
+		$harga = $_POST['harga'];
+		$keterangan = $_POST['keterangan'];
+		$update = mysqli_query($conn, "UPDATE tb_golongan SET golongan='$golongan', jenis_kendaraan='$jenis_kendaraan', harga='$harga', keterangan='$keterangan' WHERE id=$id");
+
+		if ($update) {
+			plugins('success', 'edit', 'golongan-kendaraan');
+		} else {
+			plugins('error', 'edit', 'golongan-kendaraan');
+		}
+	}
+
+	// EDITE KATEGORI PENUMPANG
+	if (isset($_POST['edt_kategori_pnmpng'])) {
+		$id = $_POST['id'];
+		$kategori = $_POST['kategori'];
+		$from_age = $_POST['from_age'];
+		$to_age = $_POST['to_age'];
+		$harga = $_POST['harga'];
+		$update = mysqli_query($conn, "UPDATE tb_harga SET kategori='$kategori', from_age='$from_age', to_age='$to_age', harga='$harga' WHERE id=$id");
+
+		if ($update) {
+			plugins('success', 'edit', 'kategori-harga');
+		} else {
+			plugins('error', 'edit', 'kategori-harga');
+		}
+	}
+
+	// UPDATE PROFIL ADMIN
+	if (isset($_POST['update_profile'])) {
+		$id = $_POST['id'];
+		$nama = $_POST['nama'];
+		$username = $_POST['username'];
+		if ($_POST['password'] != '') {
+			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		} else {
+			$password = $_POST['old_password'];
+		}
+
+		$update = mysqli_query($conn, "UPDATE tb_admin SET nama='$nama', username='$username', password='$password' WHERE id='$id'");
+
+		if ($update) {
+			plugins('success', 'update', 'index');
+		} else {
+			plugins('error', 'update', 'index');
+		}
+	}
+
+	// UDATE PENGUMUMAN
+	if (isset($_POST['save_pengumuman'])) {
+		$judul = $_POST['judul'];
+		$pengumuman = $_POST['pengumuman'];
+		$waktu = date('Y-m-d H:i:s');
+
+		$update = mysqli_query($conn, "UPDATE tb_pengumuman SET judul='$judul', pengumuman='$pengumuman', waktu='$waktu'");
+
+		if ($update) {
+			plugins('success', 'update', 'pengumuman');
+		} else {
+			plugins('error', 'update', 'pengumuman');
+		}
+	}
+
+	if (isset($_GET['delete_pengumuman'])) {
+		$update = mysqli_query($conn, "UPDATE tb_pengumuman SET judul=NULL, pengumuman=NULL, waktu=NULL");
+
+		if ($update) {
+			plugins('success', 'hapus', 'pengumuman');
+		} else {
+			plugins('error', 'hapus', 'pengumuman');
+		}
+	}
+
+	// UPDATE JADWAL KAPAL
+	if (isset($_POST['update_jadwal'])) {
+		$id = $_POST['kapal_id'];
+		$status = $_POST['status'];
+		$tujuan = $_POST['tujuan'];
+		$tanggal = $_POST['tanggal'];
+		$jam = $_POST['jam'];
+
+		if ($status == 'Tidak Beroprasi') {
+			$query = "UPDATE tb_kapal SET tujuan=NULL, waktu_berangkat=NULL, status='$status' WHERE id='$id'";
+		} else {
+			if ($tujuan == '' || $tanggal == '' || $jam == '') {
+				plugins('warning', 'update', 'jadwal-keberangkatan');
+				exit();
+			}
+
+			$waktu_berangkat = $tanggal.' '.$jam;
+			$query = "UPDATE tb_kapal SET tujuan='$tujuan', waktu_berangkat='$waktu_berangkat', status='$status' WHERE id='$id'";
+		}
+		$update = mysqli_query($conn, $query);
+
+		if ($update) {
+			plugins('success', 'update', 'jadwal-keberangkatan');
+		} else {
+			plugins('error', 'update', 'jadwal-keberangkatan');
+		}
+	}
 }
 
 // ACTION DELETE 
@@ -80,6 +224,30 @@ function delete($conn) {
 			plugins('success', 'hapus', 'data-kapal');
 		} else {
 			plugins('error', 'hapus', 'data-kapal');
+		}
+	}
+
+	// DELETE GOLONGAN
+	if (isset($_GET['delete_golongan'])) {
+		$id = $_GET['id'];
+		mysqli_query($conn, "DELETE FROM tb_golongan WHERE id=$id");
+
+		if (mysqli_affected_rows($conn) > 0) {
+			plugins('success', 'hapus', 'golongan-kendaraan');
+		} else {
+			plugins('error', 'hapus', 'golongan-kendaraan');
+		}
+	}
+
+	// DELETE KATEGORI PENUMPANG
+	if (isset($_GET['del_kategori_pnmpng'])) {
+		$id = $_GET['id'];
+		mysqli_query($conn, "DELETE FROM tb_harga WHERE id=$id");
+
+		if (mysqli_affected_rows($conn) > 0) {
+			plugins('success', 'hapus', 'kategori-harga');
+		} else {
+			plugins('error', 'hapus', 'kategori-harga');
 		}
 	}
 }

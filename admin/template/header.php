@@ -4,6 +4,21 @@ require('../config.php');
 if (!isset($_SESSION['login_admin'])) {
   header("location: login.php");
 }
+
+// Read Pesan
+$read = null;
+if (isset($_GET['read'])) {
+  $id = $_GET['read'];
+  mysqli_query($conn, "UPDATE tb_pesan SET status='read' WHERE id='$id'");
+  $read_pesan = mysqli_query($conn, "SELECT * FROM tb_pesan WHERE id='$id'");
+  $read = mysqli_fetch_assoc($read_pesan);
+}
+
+$get_admin = mysqli_query($conn, "SELECT * FROM tb_admin");
+$admin = mysqli_fetch_assoc($get_admin);
+
+$get_pesan = mysqli_query($conn, "SELECT * FROM tb_pesan WHERE status='send'");
+$jumlah_pesan = mysqli_num_rows($get_pesan);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,29 +81,38 @@ if (!isset($_SESSION['login_admin'])) {
                 <li><a><i class="fa fa-calculator"></i> Transaksi Pembayaran</span></a></li>
                 <li><a><i class="fa fa-users"></i> Data Penumpang<span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="general_elements.html">Data Pendaftar</a></li>
-                    <li><a href="media_gallery.html">Data Penumpang</a></li>
+                    <li><a href="data-pendaftar.php">Data Pendaftar</a></li>
+                    <li><a href="penumpang-terdaftar.php">Penumpang Terdaftar</a></li>
+                    <li><a href="riwayat-penumpang.php">Riwayat Penumpang</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-database"></i> Kelola Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="data-kapal.php">Data Kapal</a></li>
                     <li><a href="golongan-kendaraan.php">Golongan Kendaraan</a></li>
+                    <li><a href="kategori-harga.php">Kategori Harga Penumpang</a></li>
                     <li><a href="data-user.php">Data User</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-info"></i> Kelola Informasi <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="chartjs2.html">Jadwal Keberangkatan</a></li>
-                    <li><a href="chartjs.html">Pengumuman</a></li>
+                    <li><a href="jadwal-keberangkatan.php">Jadwal Keberangkatan</a></li>
+                    <li><a href="pengumuman.php">Pengumuman</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-envelope"></i> Pesan Masuk</span></a></li>
+                <li>
+                  <a href="pesan-masuk.php">
+                    <i class="fa fa-envelope"></i>
+                    <?php if ($jumlah_pesan > 0): ?>
+                      <span class="badge bg-danger" style="position: absolute; margin-left: -15px; margin-top: -4px;"><?= $jumlah_pesan ?></span>                      
+                    <?php endif ?>
+                    <span>Pesan Masuk</span>
+                  </a>
+                </li>
                 <li><a><i class="fa fa-file-text-o"></i>Laporan <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="fixed_sidebar.html">Laporan Data Penumpang</a></li>
+                    <li><a href="laporan-penumpang.php">Laporan Data Penumpang</a></li>
                     <li><a href="fixed_footer.html">Laporan Transaksi</a></li>
-                    <li><a href="fixed_footer.html">Riwayat Perjalanan Kapal</a></li>
                   </ul>
                 </li>
               </ul>
@@ -108,10 +132,10 @@ if (!isset($_SESSION['login_admin'])) {
             <ul class=" navbar-right">
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                  <img src="images/img.jpg" alt="">John Doe
+                  <img src="images/admin.png" alt=""><?= $admin['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                  <a class="dropdown-item"  href="javascript:;" data-toggle="modal" data-target="#editProfil"> Profile</a>
                   <a class="dropdown-item"  href="logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -119,4 +143,41 @@ if (!isset($_SESSION['login_admin'])) {
           </nav>
         </div>
       </div>
-        <!-- /top navigation -->
+      <!-- /top navigation -->
+      
+      <!-- Modal Edit Profil -->
+      <div class="modal fade" id="editProfil" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Profil</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form method="POST" action="controller.php">
+              <div class="modal-body">
+                <div class="container px-5">
+                  <div class="form-group">
+                    <label class="col-form-label">Nama</label>
+                    <input type="hidden" name="id" value="<?= $admin['id'] ?>">
+                    <input type="text" class="form-control" required="" placeholder="Nama..." name="nama" autocomplete="off" value="<?= $admin['nama'] ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Username</label>
+                    <input type="username" class="form-control" required="" placeholder="Username..." name="username" autocomplete="off" value="<?= $admin['username'] ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Password</label>
+                    <input type="text" class="form-control" placeholder="Ganti Password..." name="password" autocomplete="off" value="">
+                    <input type="hidden" name="old_password" value="<?= $admin['password'] ?>">
+                    <span class="text-info" style="font-size: 14px">Note: Masukkan password baru untuk mengganti password</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer pr-5 mr-2">
+                <button type="submit" class="btn btn-primary mr-2" name="update_profile">Simpan</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>

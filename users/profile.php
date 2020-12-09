@@ -42,7 +42,7 @@ require('template/header.php');
             </li>
           </ul>
           <div class="text-center">
-            <a href="#" class="btn btn-primary btn-sm"><i class="material-icons">person</i> &nbsp;Edit Profil</a>
+            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editProfil"><i class="material-icons">person</i> &nbsp;Edit Profil</a>
           </div>
         </div>
       </div>
@@ -50,6 +50,72 @@ require('template/header.php');
   </div>
 </div>
 
+<!-- Modal Edit Profil -->
+<div class="modal fade" id="editProfil" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Profil</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <form method="POST" action="controller.php">
+        <div class="modal-body">
+          <div class="container">
+            <div class="form-group">
+              <label class="col-form-label">Nama</label>
+              <input type="hidden" name="id" value="<?= $user['id'] ?>">
+              <input type="hidden" name="old_nama" value="<?= $user['nama'] ?>">
+              <input type="text" class="form-control" required="" placeholder="Nama..." name="nama" autocomplete="off" value="<?= $user['nama'] ?>">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Jenis Kelamin</label>
+              <select class="form-control" required="" name="jenis_kelamin" id="jenis_kelamin">
+                <option value="">Jenis Kelamin...</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Umur</label>
+              <input type="number" class="form-control" required="" placeholder="Umur..." name="umur" autocomplete="off" value="<?= $user['umur'] ?>">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Alamat</label>
+              <textarea class="form-control" required="" placeholder="Alamat..." name="alamat" rows="3"><?= $user['alamat'] ?></textarea>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Telepon</label>
+              <input type="number" class="form-control" required="" placeholder="Telepon..." name="telepon" autocomplete="off" value="<?= $user['telepon'] ?>">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Email</label>
+              <input type="email" class="form-control" required="" placeholder="Email..." name="email" autocomplete="off" value="<?= $user['email'] ?>">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Password</label>
+              <input type="text" class="form-control" placeholder="Ganti Password..." name="password" autocomplete="off" value="">
+              <input type="hidden" name="old_password" value="<?= $user['password'] ?>">
+              <span class="text-info" style="font-size: 14px">Note: Masukkan password baru untuk mengganti password</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary mr-2" name="update_profile">Simpan</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <?php 
 require('template/footer.php');
 ?>
+
+<script>
+  $(document).ready(function() {
+    $('#jenis_kelamin').val("<?= $user['jenis_kelamin'] ?>");
+  });  
+</script>

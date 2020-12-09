@@ -150,21 +150,21 @@ $result = mysqli_query($conn, "SELECT * FROM tb_kapal");
 
 	<!-- MODAL HAPUS -->
 	<div class="modal modal-delete<?= $dta['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticModalLabel">Hapus Data</h5>
-            </div>
-            <div class="modal-body">
-                <p>Yakin ingin menghapus data ini?</p>
-            </div>
-            <div class="modal-footer form-inline">
-                <a href="controller.php?delete_kapal=true&id=<?= $dta['id'] ?>" role="button" class="btn btn-danger">Hapus</a>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-            </div>
-        </div>
-    </div>
-</div>
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticModalLabel">Hapus Data</h5>
+				</div>
+				<div class="modal-body">
+					<p>Yakin ingin menghapus data ini?</p>
+				</div>
+				<div class="modal-footer form-inline">
+					<a href="controller.php?delete_kapal=true&id=<?= $dta['id'] ?>" role="button" class="btn btn-danger">Hapus</a>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <?php }
 ?>
 <?php 
