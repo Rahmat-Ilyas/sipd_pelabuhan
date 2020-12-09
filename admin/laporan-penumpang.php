@@ -1,7 +1,7 @@
 <?php 
 require('template/header.php');
 
-$result = mysqli_query($conn, "SELECT * FROM tb_penumpang ORDER BY id DESC");
+$result = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE status!='Batal' ORDER BY id DESC");
 ?>
 
 <!-- page content -->
@@ -9,7 +9,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_penumpang ORDER BY id DESC");
 	<div class="">
 		<div class="page-title">
 			<div class="title_left" style="width: 100%">
-				<h3>Riwayat Semua Penumpang Yang Telah Mendaftar di Sistem</small></h3>
+				<h3>Laporan Data Penumpang</small></h3>
 			</div>
 		</div>
 
@@ -20,9 +20,12 @@ $result = mysqli_query($conn, "SELECT * FROM tb_penumpang ORDER BY id DESC");
 				<div class="x_panel">
 					<div class="x_content">
 						<div class="row">
+							<div class="col-sm-12 row">
+								<input type="text" class="form-control" name="">
+							</div>
 							<div class="col-sm-12">
 								<div class="card-box table-responsive">
-									<table id="datatable" class="table table-striped table-bordered" style="width:100%">
+									<table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
 										<thead>
 											<tr>
 												<th width="10">No</th>
@@ -76,3 +79,8 @@ $result = mysqli_query($conn, "SELECT * FROM tb_penumpang ORDER BY id DESC");
 require('template/footer.php');
 ?>
 
+<script>
+	$(document).ready(function($) {
+		$('title').html('Laporan Penumpang Pelabuhan Pamatata');
+	});
+</script>

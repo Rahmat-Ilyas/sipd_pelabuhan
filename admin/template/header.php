@@ -78,12 +78,22 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
             <div class="menu_section">
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
-                <li><a><i class="fa fa-calculator"></i> Transaksi Pembayaran</span></a></li>
+                <li>
+                  <a href="transaksi.php"><i class="fa fa-calculator"></i> Transaksi Pembayaran</a>
+                </li>
+                <li>
+                  <a href="data-pendaftar.php"><i class="fa fa-wpforms"></i> Data Pendaftar</a>
+                </li>
                 <li><a><i class="fa fa-users"></i> Data Penumpang<span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="data-pendaftar.php">Data Pendaftar</a></li>
                     <li><a href="penumpang-terdaftar.php">Penumpang Terdaftar</a></li>
                     <li><a href="riwayat-penumpang.php">Riwayat Penumpang</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bus"></i> Data Kendaraan<span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="data-kendaraan.php">Kendaraan Terdaftar</a></li>
+                    <li><a href="riwayat-kendaraan.php">Riwayat Kendaraan</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-database"></i> Kelola Data <span class="fa fa-chevron-down"></span></a>
@@ -112,6 +122,7 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
                 <li><a><i class="fa fa-file-text-o"></i>Laporan <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="laporan-penumpang.php">Laporan Data Penumpang</a></li>
+                    <li><a href="laporan-kendaraan.php">Laporan Data Kendaraan</a></li>
                     <li><a href="fixed_footer.html">Laporan Transaksi</a></li>
                   </ul>
                 </li>
