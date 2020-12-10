@@ -68,6 +68,7 @@
 <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <script src="vendors/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="vendors/select2/dist/js/select2.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="build/js/custom.min.js"></script>

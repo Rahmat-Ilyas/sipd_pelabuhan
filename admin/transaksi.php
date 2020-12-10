@@ -41,6 +41,14 @@ if (isset($_GET['find_code'])) {
 	}
 }
 
+$option = '';
+$get_code = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Belum Lunas'");
+foreach ($get_code as $opt) {
+	$usr_id = $opt['user_id'];
+	$getUser = mysqli_query($conn, "SELECT * FROM tb_users WHERE id='$usr_id'");
+	$usr = mysqli_fetch_assoc($getUser);
+	$option .= '<option value="'.$opt['kd_transaksi'].'">'.$opt['kd_transaksi'].' ('.$usr['nama'].')</option>';
+}
 ?>
 
 <!-- page content -->
@@ -66,14 +74,18 @@ if (isset($_GET['find_code'])) {
 							<div class=" row px-2">
 								<div class="col-md-9 form-group">
 									<label>Kode Pendaftaran</label>
-									<input type="text" class="form-control" name="find_code" style="font-size: 12px;" value="<?= $_GET ? $_GET['find_code'] : 'REG-' ?>">
+
+									<select class="form-control select2" style="font-size: 12px;" name="find_code">
+										<option value="">Temukan Kode Pendaftaran</option>
+										<?= $option ?>
+									</select>
 									<?php if (isset($_GET['find_code']) && !$trs): ?>
 										<span class="text-danger"><i>Kode Pendaftaran tidak berlaku</i></span>
 									<?php endif ?>
 								</div>
 								<div class="col-md-3 form-group">
 									<label>&nbsp;</label>
-									<button type="submit" class="btn btn-primary btn-sm btn-block" style="font-size: 12px;"><i class="fa fa-search"></i> &nbsp;Temukan</button>
+									<button type="submit" class="btn btn-primary btn-block" style="font-size: 12px;"><i class="fa fa-search"></i> &nbsp;Temukan</button>
 								</div>
 							</div>
 						</form>
@@ -379,6 +391,14 @@ require('template/footer.php');
 
 <script>
 	$(document).ready(function() {
+		$('.select2').select2({
+			placeholder: "<?= $trs ? $trs['kd_transaksi'].' ('.$trs['nama'].')' : 'Temukan Kode Pendaftaran' ?>"
+		});
+
+		<?php if (isset($trs['kd_transaksi'])) { ?>
+			$('.select2').val('<?= $trs['kd_transaksi'] ?>');
+		<?php } ?>
+
 		$(document).on('click', '#cetak-transaksi', function(e) {
 			e.preventDefault();
 			$('.transaksi-area').printArea();

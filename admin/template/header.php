@@ -51,6 +51,9 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
   <!-- bootstrap-daterangepicker -->
   <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
+  <!-- select2 -->
+  <link href="vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+
   <!-- Datatables -->  
   <link href="vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
   <link href="vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
