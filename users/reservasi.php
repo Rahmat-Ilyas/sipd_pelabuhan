@@ -1,10 +1,17 @@
 <?php 
 require('template/header.php');
-$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status='Belum Lunas'");
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal'");
 $reserv = mysqli_fetch_assoc($reservasi);
+$kd_daftar = $reserv['kd_transaksi'];
+$get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
+$tgl = mysqli_fetch_assoc($get_penumpang);
+$tanggal_daftar = $tgl['tanggal_daftar'];
+$tanggal_sekrng = date('Y-m-d H:i:s');
 
-if ($reserv) {
-  header("Location: controller.php?reservasi_exits=true");
+if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+  if ($reserv['status'] == 'Lunas') $status = 'success';
+  else $status = 'panding';
+  header("Location: controller.php?reservasi_exits=true&status=".$status);
 }
 
 $kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");

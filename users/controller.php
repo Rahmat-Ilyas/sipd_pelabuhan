@@ -26,7 +26,7 @@ function plugins($status, $message, $header) { ?>
 				});
 			<?php } else if ($status == 'warning') { ?>
 				Swal.fire({
-					title: 'Selesaikan Reservasi',
+					title: 'Tidak Bisa Melakukan Reservasi',
 					text: '<?= $message ?>',
 					type: 'warning',
 					onClose: () => {
@@ -66,6 +66,7 @@ function store($conn) {
 		}
 	}
 
+	// RESERVASI
 	if (isset($_POST['store_reservasi'])) {
 		$user_id = $_POST['user_id'];
 		$kd_pendaftaran = $_POST['kd_pendaftaran'];
@@ -125,7 +126,7 @@ function store($conn) {
 		$biaya_kendaraan = $harga_kendaraan;
 		$total_harga = $total_harga_tiket + $harga_kendaraan;
 		
-		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '0', '$total_harga', 'Belum Lunas')");
+		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', 'Belum Lunas')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi selambat lambatnya 1x24 jam';
@@ -338,7 +339,11 @@ function config($conn) {
 	}
 
 	if (isset($_GET['reservasi_exits'])) {
-		$message = 'Anda belum menyelesaikan reservasi sebelummnya, selesaikan terlebih dahulu untuk melakukan reservasi lain.';
+		if ($_GET['status'] == 'success') {
+			$message = 'Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1x24 Jam.';
+		} else {
+			$message = 'Anda belum menyelesaikan reservasi sebelummnya. Selesaikan terlebih dahulu untuk melakukan reservasi lain.';
+		}
 		plugins('warning', $message, 'data-reservasi');
 	}
 }

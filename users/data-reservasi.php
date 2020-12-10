@@ -1,11 +1,16 @@
 <?php 
 require('template/header.php');
 
-$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status='Belum Lunas'");
-$reserv = mysqli_fetch_assoc($reservasi);
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal'");
+$get_data = mysqli_fetch_assoc($reservasi);
+$kd_daftar = $get_data['kd_transaksi'];
+$get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
+$tgl = mysqli_fetch_assoc($get_penumpang);
+$tanggal_daftar = $tgl['tanggal_daftar'];
+$tanggal_sekrng = date('Y-m-d H:i:s');
 
-if ($reserv) {
-  $kd_daftar = $reserv['kd_transaksi'];
+if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+  $reserv = $get_data;
   $orang = 0;
   $kendaraan = 0;
   $tanggal = '';
@@ -20,6 +25,8 @@ if ($reserv) {
   foreach ($get_kendaraan as $kn) {
     $kendaraan = $kendaraan + 1;
   }
+} else {
+  $reserv = [];
 }
 ?>
 
@@ -40,7 +47,11 @@ if ($reserv) {
             <th>Kendaraan</th>
             <th>Tujuan</th>
             <th>Total Harga</th>
-            <th width="150">Aksi</th>
+            <?php if ($reserv && $reserv['status'] == 'Lunas') { ?>
+              <th width="150">Status</th>
+            <?php } else { ?>
+              <th width="150">Aksi</th>
+            <?php } ?>
           </tr>
         </thead>
         <tbody>
@@ -58,9 +69,15 @@ if ($reserv) {
               </td>
               <td><?= $tujuan ?></td>
               <td>Rp. <?= $reserv['total_harga'] ?></td>
-              <td>
-                <a href="#" class="btn btn-danger btn-sm" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
-              </td>
+              <?php if ($reserv['status'] == 'Lunas') { ?>
+                <td class="text-center">
+                  <span class="badge badge-pill badge-success" style="width: 60%;">Selesai</span>
+                </td>
+              <?php } else { ?>
+                <td>
+                  <a href="#" class="btn btn-danger btn-sm" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
+                </td>
+              <?php } ?>
             </tr>
           <?php } else { ?>
             <tr class="text-center">
@@ -80,7 +97,11 @@ if ($reserv) {
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true"><i class="material-icons">clear</i></span>
             </button>
-            <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 86400) ?></b> atau reservasi akan di batalkan.
+            <?php if ($reserv['status'] == 'Lunas') { ?>
+              <b>Info Alert:</b> Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1x24 Jam.
+            <?php } else { ?>
+              <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 86400) ?></b> atau reservasi akan di batalkan.
+            <?php } ?>
           </div>
         </div>
       <?php } ?>
@@ -168,10 +189,10 @@ if ($reserv) {
                 <td><?= $dta['nomor_kendaraan']; ?></td>
               </tr>
             <?php } if (empty($gol_id)) { ?>
-                  <tr>
-                    <td colspan="6" class="text-center">Tidak ada kendaraan</td>
-                  </tr>
-                <?php } ?>
+              <tr>
+                <td colspan="6" class="text-center">Tidak ada kendaraan</td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
@@ -192,7 +213,7 @@ require('template/footer.php');
 
     $('#batal-reservasi').click(function() {
       swal({
-        title: "BatalkanReservasi?",
+        title: "Batalkan Reservasi?",
         html: "Yakin ingin membatalkan reservasi ini!",
         type: "warning",
         showCancelButton: true,

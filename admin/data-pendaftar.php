@@ -109,9 +109,9 @@ foreach (array_unique($kd_trns) as $kd) {
 													<td>
 														<?php 
 														if ($status == 'Selesai') { ?>
-															<a href="" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
+															<a href="transaksi.php?find_code=<?= $dta['kd_transaksi'] ?>&cetak=true" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
 														<?php } else { ?>
-															<a href="" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
+															<a href="transaksi.php?find_code=<?= $dta['kd_transaksi'] ?>" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
 														<?php } ?>
 													</td>
 												</tr>

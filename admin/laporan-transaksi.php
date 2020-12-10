@@ -56,7 +56,7 @@ function get_data($laporan, $waktu) {
 	<div class="">
 		<div class="page-title">
 			<div class="title_left" style="width: 100%">
-				<h3>Laporan Data Penumpang</small></h3>
+				<h3>Laporan Data Transaksi</small></h3>
 			</div>
 		</div>
 
@@ -109,7 +109,6 @@ function get_data($laporan, $waktu) {
 												<th>Penumpang</th>
 												<th>Hatga Tiket</th>
 												<th>Kendaraan</th>
-												<th>Lainnya</th>
 												<th>Total</th>
 											</tr>
 										</thead>
@@ -123,7 +122,6 @@ function get_data($laporan, $waktu) {
 													<td><?= $dta['penumpang']; ?> Orang</td>
 													<td>Rp. <?= $dta['total_harga_tiket']; ?></td>
 													<td>Rp. <?= $dta['biaya_kendaraan']; ?></td>
-													<td>Rp. <?= $dta['biaya_lainnya']; ?></td>
 													<td>Rp. <?= $dta['total_harga']; ?></td>
 												</tr>
 												<?php $no = $no + 1; 

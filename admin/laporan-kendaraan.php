@@ -64,7 +64,7 @@ function get_data($status, $laporan, $waktu) {
 	<div class="">
 		<div class="page-title">
 			<div class="title_left" style="width: 100%">
-				<h3>Laporan Data Penumpang</small></h3>
+				<h3>Laporan Data Kendaraan</small></h3>
 			</div>
 		</div>
 

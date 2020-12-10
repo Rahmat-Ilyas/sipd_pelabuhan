@@ -210,6 +210,22 @@ function update($conn) {
 			plugins('error', 'update', 'jadwal-keberangkatan');
 		}
 	}
+
+	// SELESAI TRANSAKSI
+	if (isset($_GET['transaksi_selesai'])) {
+		$kd = $_GET['kd_transaksi'];
+
+		// Update Transaksi
+		$transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Lunas' WHERE kd_transaksi='$kd'");
+		// Update Penumpang
+		$penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Selesai' WHERE kd_pendaftaran='$kd'");
+
+		if ($transaksi && $penumpang) {
+			plugins('success', 'update. Transaksi selesai', 'transaksi');
+		} else {
+			plugins('error', 'update. Transaksi gagal', 'transaksi');
+		}
+	}
 }
 
 // ACTION DELETE 
@@ -249,6 +265,41 @@ function delete($conn) {
 		} else {
 			plugins('error', 'hapus', 'kategori-harga');
 		}
+	}
+}
+
+// ACTION CONFIG
+config($conn);
+function config($conn) {
+	if (isset($_POST['set_print'])) {
+		$id = $_POST['id'];
+
+		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE id='$id'");
+		$pen = mysqli_fetch_assoc($penumpang);
+
+		$kpl_id = $pen['kapal_id'];
+		$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kpl_id'");
+		$kpl = mysqli_fetch_assoc($kapal);
+
+		$ktgr = $pen['kategori'];
+		$kategori = mysqli_query($conn, "SELECT * FROM tb_harga WHERE kategori='$ktgr'");
+		$ktg = mysqli_fetch_assoc($kategori);
+
+		$data = [];
+		$data['nomor_tiket'] = $pen['nomor_tiket'];
+		$data['tujuan'] = $pen['tujuan'];
+		$data['kategori'] = $pen['kategori'];
+		$data['umur'] = $pen['umur'];
+		$data['tanggal1'] = date('d M Y', strtotime($pen['tanggal_daftar']));
+		$data['kapal'] = $kpl['nama_kapal'];
+		$data['nama'] = $pen['nama'];
+		$data['jenis_kelamin'] = $pen['jenis_kelamin'];
+		$data['harga1'] = $ktg['harga'];
+		$data['harga2'] = $ktg['harga'];
+		$data['tanggal2'] = date('d/m/Y', strtotime($pen['tanggal_daftar']));
+
+		header('Content-type: application/json');
+		echo json_encode($data);
 	}
 }
 ?>
