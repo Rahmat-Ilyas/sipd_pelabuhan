@@ -3,30 +3,34 @@ require('template/header.php');
 
 $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal'");
 $get_data = mysqli_fetch_assoc($reservasi);
-$kd_daftar = $get_data['kd_transaksi'];
-$get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
-$tgl = mysqli_fetch_assoc($get_penumpang);
-$tanggal_daftar = $tgl['tanggal_daftar'];
-$tanggal_sekrng = date('Y-m-d H:i:s');
 
-if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
-  $reserv = $get_data;
-  $orang = 0;
-  $kendaraan = 0;
-  $tanggal = '';
-  $penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
-  foreach ($penumpang as $pn) {
-    $orang = $orang + 1;
-    $tanggal = $pn['tanggal_daftar'];
-    $tujuan = $pn['tujuan'];
-  }
+$orang = 0;
+$kendaraan = 0;
+$tanggal = '';
+$reserv = [];
+if (isset($get_data)) {
+  $kd_daftar = $get_data['kd_transaksi'];
+  $get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
+  $tgl = mysqli_fetch_assoc($get_penumpang);
+  $tanggal_daftar = $tgl['tanggal_daftar'];
+  $tanggal_sekrng = date('Y-m-d H:i:s');
 
-  $get_kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE kd_pendaftaran='$kd_daftar'");
-  foreach ($get_kendaraan as $kn) {
-    $kendaraan = $kendaraan + 1;
+  if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+    $reserv = $get_data;
+    $penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
+    foreach ($penumpang as $pn) {
+      $orang = $orang + 1;
+      $tanggal = $pn['tanggal_daftar'];
+      $tujuan = $pn['tujuan'];
+    }
+
+    $get_kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE kd_pendaftaran='$kd_daftar'");
+    foreach ($get_kendaraan as $kn) {
+      $kendaraan = $kendaraan + 1;
+    }
+  } else {
+    $reserv = [];
   }
-} else {
-  $reserv = [];
 }
 ?>
 
