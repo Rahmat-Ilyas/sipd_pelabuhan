@@ -1,6 +1,6 @@
 <?php 
 require('template/header.php');
-$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal'");
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
 $reserv = mysqli_fetch_assoc($reservasi);
 if (isset($reserv)) {
   $kd_daftar = $reserv['kd_transaksi'];
