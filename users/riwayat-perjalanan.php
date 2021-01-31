@@ -6,17 +6,17 @@ $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$use
 
 <div class="container bg-white pb-5">
   <div class="p-2">
-    <h3>Riwayat Perjalanan</h3>
+    <h3>Riwayat Reservasi</h3>
     <hr>
   </div>
   <div class="row">
     <div class="col-md-12 ml-auto mr-auto mt-0">
-      <h4 class="mt-0 text-center">Riwayat Perjalanan Anda</h4>
+      <h4 class="mt-0 text-center">Riwayat Reservasi Anda</h4>
       <table id="datatable" class="table table-bordered" style="font-size: 15px;">
         <thead>
           <tr>
             <th width="10">No</th>
-            <th>Tanggal Berangkat</th>
+            <th>Tanggal Reservasi</th>
             <th>Penumpang</th>
             <th>Kendaraan</th>
             <th>Kapal</th>
