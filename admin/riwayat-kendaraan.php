@@ -71,7 +71,7 @@ foreach (array_unique($kd_trns) as $kd) {
 													<td><?= $dta['nomor_tiket']; ?></td>
 													<td>
 														<?= $gol['golongan']; ?>
-														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Penumpang" data-target="#detailGolongan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
+														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailGolongan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
 													</td>
 													<td><?= $dta['nama_sopir']; ?></td>
 													<td><?= $dta['merek_kendaraan']; ?></td>
