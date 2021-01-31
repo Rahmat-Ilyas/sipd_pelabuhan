@@ -1,7 +1,7 @@
 <?php 
 require('template/header.php');
 
-$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal'");
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
 $get_data = mysqli_fetch_assoc($reservasi);
 
 $orang = 0;
