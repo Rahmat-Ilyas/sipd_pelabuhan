@@ -60,7 +60,7 @@ $user = mysqli_fetch_assoc($get_user);
           </li>
           <li class="nav-item" id="riwayat">
             <a class="nav-link" href="riwayat-perjalanan.php">
-              <i class="material-icons">history</i> Riwayat Perjalanan
+              <i class="material-icons">history</i> Riwayat Reservasi
             </a>
           </li>
           <li class="nav-item" id="pergisama">
