@@ -48,39 +48,39 @@ foreach (array_unique($kd_pendaftaran) as $kd) {
 					</div>
 					<div class="row">
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
-							<div class="tile-stats">
-								<div class="icon"><i class="fa fa fa-wpforms"></i>
+							<div class="tile-stats" style="background: #1ABB9C">
+								<div class="icon"><i class="fa fa fa-wpforms text-white"></i>
 								</div>
-								<div class="count"><?= $jumlah_pendaftar ?></div>
+								<div class="count text-white"><?= $jumlah_pendaftar ?></div>
 
-								<h3>Jumlah Pendaftaran</h3>
+								<h3 class="text-white">Jumlah Pendaftaran</h3>
 							</div>
 						</div>
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
-							<div class="tile-stats">
-								<div class="icon"><i class="fa fa-users"></i>
+							<div class="tile-stats" style="background: #1ABB9C">
+								<div class="icon"><i class="fa fa-users text-white"></i>
 								</div>
-								<div class="count"><?= $jumlah_penumpang ?></div>
+								<div class="count text-white"><?= $jumlah_penumpang ?></div>
 
-								<h3>Total Jumlah Penumpang</h3>
+								<h3 class="text-white">Total Jumlah Penumpang</h3>
 							</div>
 						</div>
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
-							<div class="tile-stats">
-								<div class="icon"><i class="fa fa-bus"></i>
+							<div class="tile-stats" style="background: #1ABB9C">
+								<div class="icon"><i class="fa fa-bus text-white"></i>
 								</div>
-								<div class="count"><?= $jumlah_kendaraan ?></div>
+								<div class="count text-white"><?= $jumlah_kendaraan ?></div>
 
-								<h3>Jumlah &nbsp; Kendaraan</h3>
+								<h3 class="text-white">Jumlah &nbsp; Kendaraan</h3>
 							</div>
 						</div>
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
-							<div class="tile-stats">
-								<div class="icon"><i class="fa fa-anchor"></i>
+							<div class="tile-stats" style="background: #1ABB9C">
+								<div class="icon"><i class="fa fa-anchor text-white"></i>
 								</div>
-								<div class="count"><?= $jumlah_kapal ?></div>
+								<div class="count text-white"><?= $jumlah_kapal ?></div>
 
-								<h3>Jumlah Kapal Sandar</h3>
+								<h3 class="text-white">Jumlah Kapal Sandar</h3>
 							</div>
 						</div>
 					</div>
