@@ -114,7 +114,7 @@ function store($conn) {
 			$merek_kendaraan = $_POST['merek_kendaraan'];
 			$nomor_kendaraan = $_POST['nomor_kendaraan'];
 
-			$get_golongan = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
+			$get_golongan = mysqli_query($conn, "SELECT * FROM tb_golongan WHERE id='$golongan_id'");
 			$gol = mysqli_fetch_assoc($get_golongan);
 			$harga_kendaraan = $gol['harga'];
 
