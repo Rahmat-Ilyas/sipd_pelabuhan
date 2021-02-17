@@ -47,8 +47,9 @@ function store($conn) {
 	if (isset($_POST['tambah_kapal'])) {
 		$nama_kapal = $_POST['nama_kapal'];
 		$harga = $_POST['harga'];
+		$kapasitas = $_POST['kapasitas'];
 		$keterangan = $_POST['keterangan'];
-		mysqli_query($conn, "INSERT INTO tb_kapal VALUES (NULL, '$nama_kapal', '$harga', '$keterangan', NULL, NULL, 'Tidak Beroprasi')");
+		mysqli_query($conn, "INSERT INTO tb_kapal VALUES (NULL, '$nama_kapal', '$harga', '$kapasitas', '$keterangan', NULL, NULL, 'Tidak Beroprasi')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			plugins('success', 'tambah', 'data-kapal');
@@ -62,8 +63,9 @@ function store($conn) {
 		$golongan = $_POST['golongan'];
 		$jenis_kendaraan = $_POST['jenis_kendaraan'];
 		$harga = $_POST['harga'];
+		$kapasitas = $_POST['kapasitas'];
 		$keterangan = $_POST['keterangan'];
-		mysqli_query($conn, "INSERT INTO tb_golongan VALUES (NULL, '$golongan', '$jenis_kendaraan', '$harga', '$keterangan')");
+		mysqli_query($conn, "INSERT INTO tb_golongan VALUES (NULL, '$golongan', '$jenis_kendaraan', '$harga', '$kapasitas', '$keterangan')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			plugins('success', 'tambah', 'golongan-kendaraan');
@@ -96,8 +98,9 @@ function update($conn) {
 		$id = $_POST['id'];
 		$nama_kapal = $_POST['nama_kapal'];
 		$harga = $_POST['harga'];
+		$kapasitas = $_POST['kapasitas'];
 		$keterangan = $_POST['keterangan'];
-		$update = mysqli_query($conn, "UPDATE tb_kapal SET nama_kapal='$nama_kapal', harga='$harga', keterangan='$keterangan' WHERE id=$id");
+		$update = mysqli_query($conn, "UPDATE tb_kapal SET nama_kapal='$nama_kapal', harga='$harga', kapasitas='$kapasitas', keterangan='$keterangan' WHERE id=$id");
 
 		if ($update) {
 			plugins('success', 'edit', 'data-kapal');
@@ -112,8 +115,9 @@ function update($conn) {
 		$golongan = $_POST['golongan'];
 		$jenis_kendaraan = $_POST['jenis_kendaraan'];
 		$harga = $_POST['harga'];
+		$kapasitas = $_POST['kapasitas'];
 		$keterangan = $_POST['keterangan'];
-		$update = mysqli_query($conn, "UPDATE tb_golongan SET golongan='$golongan', jenis_kendaraan='$jenis_kendaraan', harga='$harga', keterangan='$keterangan' WHERE id=$id");
+		$update = mysqli_query($conn, "UPDATE tb_golongan SET golongan='$golongan', jenis_kendaraan='$jenis_kendaraan', harga='$harga', kapasitas='$kapasitas', keterangan='$keterangan' WHERE id=$id");
 
 		if ($update) {
 			plugins('success', 'edit', 'golongan-kendaraan');

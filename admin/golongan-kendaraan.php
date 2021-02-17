@@ -36,10 +36,11 @@ foreach ($golongan as $gol) {
 									<table id="datatable" class="table table-striped table-bordered" style="width:100%">
 										<thead>
 											<tr>
-												<th style="width: 20px;">No</th>
-												<th>Nomor Golongan</th>
+												<th width="10">No</th>
+												<th width="50">Nomor Golongan</th>
 												<th>Jenis Kendaraan</th>
 												<th>Harga</th>
+												<th>Kapasitas</th>
 												<th>Keterangan</th>
 												<th width="150">Aksi</th>
 											</tr>
@@ -51,6 +52,7 @@ foreach ($golongan as $gol) {
 													<td><?= $dta['golongan']; ?></td>
 													<td><?= $dta['jenis_kendaraan']; ?></td>
 													<td>Rp. <?= $dta['harga']; ?></td>
+													<td><?= $dta['kapasitas']; ?> Unit</td>
 													<td><?= $dta['keterangan']; ?></td>
 													<td class="text-center">
 														<button class="btn btn-success btn-sm m-0" data-toggle="modal" data-target=".modal-edit<?= $dta['id'] ?>"><i class="fa fa-edit"></i> Edit</button>
@@ -102,6 +104,12 @@ foreach ($golongan as $gol) {
 						<div class="col-md-7 form-group has-feedback">
 							<input type="number" name="harga" class="form-control has-feedback-left" required="required" placeholder="Harga" autocomplete="off">
 							<span class="form-control-feedback left" aria-hidden="true">Rp.</span>
+						</div>
+					</div>
+					<div class="item form-group">
+						<label class="col-form-label col-md-3 col-sm-3 label-align">Kapasitas</label>
+						<div class="col-md-7 form-group has-feedback">
+							<input type="number" name="kapasitas" class="form-control" required="required" placeholder="Kapasitas" autocomplete="off">
 						</div>
 					</div>
 					<div class="item form-group">
@@ -167,6 +175,12 @@ foreach ($result as $dta) {
 							<div class="col-md-7 form-group has-feedback">
 								<input type="number" name="harga" class="form-control has-feedback-left" required="required" placeholder="Harga" autocomplete="off" value="<?= $dta['harga'] ?>">
 								<span class="form-control-feedback left" aria-hidden="true">Rp.</span>
+							</div>
+						</div>
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align">Kapasitas</label>
+							<div class="col-md-7 form-group has-feedback">
+								<input type="number" name="kapasitas" class="form-control" required="required" placeholder="Kapasitas" autocomplete="off" value="<?= $dta['kapasitas'] ?>">
 							</div>
 						</div>
 						<div class="item form-group">

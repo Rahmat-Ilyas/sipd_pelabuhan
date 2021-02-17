@@ -29,6 +29,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_kapal");
 												<th style="width: 20px;">No</th>
 												<th>Nama Kapal</th>
 												<th>Harga</th>
+												<th>Kapasitas Penumpang</th>
 												<th>Keterangan</th>
 												<th width="150">Aksi</th>
 											</tr>
@@ -39,6 +40,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_kapal");
 													<td><?= $no; ?></td>
 													<td><?= $dta['nama_kapal']; ?></td>
 													<td>Rp. <?= $dta['harga']; ?></td>
+													<td><?= $dta['kapasitas']; ?> Orang</td>
 													<td><?= $dta['keterangan']; ?></td>
 													<td class="text-center">
 														<button class="btn btn-success btn-sm m-0" data-toggle="modal" data-target=".modal-edit<?= $dta['id'] ?>"><i class="fa fa-edit"></i> Edit</button>
@@ -84,6 +86,12 @@ $result = mysqli_query($conn, "SELECT * FROM tb_kapal");
 						</div>
 					</div>
 					<div class="item form-group">
+						<label class="col-form-label col-md-3 col-sm-3 label-align">Kapasitas Penumpang</label>
+						<div class="col-md-7 form-group has-feedback">
+							<input type="number" name="kapasitas" class="form-control" required="required" placeholder="Kapasitas Penumpang" autocomplete="off">
+						</div>
+					</div>
+					<div class="item form-group">
 						<label class="col-form-label col-md-3 col-sm-3 label-align">Keterangan</label>
 						<div class="col-md-7">
 							<textarea class="form-control" name="keterangan" required="" placeholder="Keterangan"></textarea>
@@ -126,6 +134,12 @@ $result = mysqli_query($conn, "SELECT * FROM tb_kapal");
 							<div class="col-md-7 form-group has-feedback">
 								<input type="number" name="harga" class="form-control has-feedback-left" required="required" placeholder="Harga" autocomplete="off" value="<?= $dta['harga'] ?>">
 								<span class="form-control-feedback left" aria-hidden="true">Rp.</span>
+							</div>
+						</div>
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align">Kapasitas Penumpang</label>
+							<div class="col-md-7 form-group has-feedback">
+								<input type="number" name="kapasitas" class="form-control" required="required" placeholder="Kapasitas Penumpang" autocomplete="off" value="<?= $dta['kapasitas'] ?>">
 							</div>
 						</div>
 						<div class="item form-group">

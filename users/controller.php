@@ -346,6 +346,40 @@ function config($conn) {
 		}
 		plugins('warning', $message, 'data-reservasi');
 	}
+
+	if (isset($_POST['cek_kps_penumpang'])) {
+		$kapal_id = $_POST['kapal_id'];
+		$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
+		$kpl = mysqli_fetch_assoc($kapal);
+
+		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kapal_id='$kapal_id' AND status='Panding'");
+		$jum_penumpang = mysqli_num_rows($penumpang);
+
+		if ($jum_penumpang >= $kpl['kapasitas']) {
+			echo "full";
+		}
+	}
+
+	if (isset($_POST['cek_kps_kendaraan'])) {
+		$golongan_id = $_POST['golongan_id'];
+		$golongan = mysqli_query($conn, "SELECT * FROM tb_golongan WHERE id='$golongan_id'");
+		$gol = mysqli_fetch_assoc($golongan);
+
+		$kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE golongan_id='$golongan_id'");
+		$jum_kendaraan = 0;
+		foreach ($kendaraan as $kdr) {
+			$kd_transaksi = $kdr['kd_pendaftaran'];
+			$transaksi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'");
+			$trs = mysqli_fetch_assoc($transaksi);
+			if ($trs['status'] == 'Belum Lunas') {
+				$jum_kendaraan = $jum_kendaraan + 1;
+			}
+		}
+
+		if ($jum_kendaraan >= $gol['kapasitas']) {
+			echo "full";
+		}
+	}
 }
 
 function generet_tiket($kd_kapal, $kd_user, $total_penumpang) {

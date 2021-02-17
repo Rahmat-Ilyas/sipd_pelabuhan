@@ -220,8 +220,27 @@ require('template/footer.php');
     });
 
     $('#kapal_id').change(function() {
-      one_only();
-      tiket_kendaraan();
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          cek_kps_penumpang: true,
+          kapal_id: $(this).val()
+        },
+        success : function(data) {
+          if (data=='full') {
+            $('#kapal_id').val('');
+            Swal.fire({
+              title: 'Kapal Telah Penuh',
+              text: 'Mohon maaf, pendaftar kapal telah memenuhi kapasitas.',
+              type: 'info'
+            });
+          } else {
+            one_only();
+            tiket_kendaraan();
+          }
+        }
+      });
       $('#jmlh_penumpang').val('1');
     });
 
@@ -233,9 +252,28 @@ require('template/footer.php');
         $('#nomor_kendaraan').removeAttr('required');
       }
       else {
-        $('#nama_sopir').attr('required', '');
-        $('#merek_kendaraan').attr('required', '');
-        $('#nomor_kendaraan').attr('required', '');
+        $.ajax({
+          url     : 'controller.php',
+          method  : "POST",
+          data    : { 
+            cek_kps_kendaraan: true,
+            golongan_id: value
+          },
+          success : function(data) {
+            if (data=='full') {
+              $('#golongan').val('');
+              Swal.fire({
+                title: 'Kapal Telah Penuh',
+                text: 'Mohon maaf, golongan kendaraan yang anda pilih telah memenuhi kapasitas.',
+                type: 'info'
+              });
+            } else {
+              $('#nama_sopir').attr('required', '');
+              $('#merek_kendaraan').attr('required', '');
+              $('#nomor_kendaraan').attr('required', '');
+            }
+          }
+        });
       }
     });
 
@@ -247,7 +285,7 @@ require('template/footer.php');
           type: 'warning',
           timer: 2000,
         });
-      }, 1000);
+      }, 2000);
     });
 
     // Function Area
