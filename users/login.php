@@ -7,6 +7,7 @@ $password = null;
 $email = null;
 $err_email = false;
 $err_pass = false;
+$err_acnt = false;
 
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
@@ -18,14 +19,16 @@ if (isset($_POST['login'])) {
   if ($get) {
     $get_password = $get['password'];
     if (password_verify($password, $get_password)) {
-      $_SESSION['login_user'] = $get_password;
-      $_SESSION['user_id'] = $get['id'];
-      if (isset($_GET['from_home'])) {
-        header("location: reservasi.php");
-      } else {
-        header("location: panel.php");
-      }
-      exit();
+      if ($get['status'] == 'acc') {
+        $_SESSION['login_user'] = $get_password;
+        $_SESSION['user_id'] = $get['id'];
+        if (isset($_GET['from_home'])) {
+          header("location: reservasi.php");
+        } else {
+          header("location: panel.php");
+        }
+        exit();
+      } else $err_acnt = true;
     } else $err_pass = true;
   } else $err_email = true;
 }
@@ -106,6 +109,9 @@ if (isset($_POST['login'])) {
                 </div>
                 <?php if ($err_pass == true) { ?>
                   <span class="text-danger ml-5 pl-2 mb-0">Password tidak sesuai</span>
+                <?php } ?>
+                <?php if ($err_acnt == true) { ?>
+                  <span class="text-danger ml-5 pl-2 mb-0">Akun belum di verifikasi cek email anda!</span>
                 <?php } ?>
               </div>
               <div class="footer text-center mb-4">

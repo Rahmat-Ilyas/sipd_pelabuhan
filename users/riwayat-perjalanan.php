@@ -57,7 +57,12 @@ $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$use
                 <?= $kendaraan ?> Unit
                 <a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailKendaraan<?= $dta['id'] ?>"><i class="material-icons" style="font-size: 16px;">info_outline</i></a>
               </td>
-              <td><?= $kapal['nama_kapal'] ?></td>
+              <td>
+                <?php 
+                if (isset($kapal['nama_kapal'])) echo $kapal['nama_kapal'];
+                else echo '<i>-Data kapal tidak ada-</i>';
+                ?>
+              </td>
               <td><?= $tujuan ?></td>
               <td class="text-center">
                 <?php 

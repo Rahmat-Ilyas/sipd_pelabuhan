@@ -52,14 +52,21 @@ function store($conn) {
 		$telepon = $_POST['telepon'];
 		$email = $_POST['email'];
 		$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-		mysqli_query($conn, "INSERT INTO tb_users VALUES (NULL, '$nama', '$umur', '$alamat', '$jenis_kelamin', '$telepon', '$email', '$password')");
+		mysqli_query($conn, "INSERT INTO tb_users VALUES (NULL, '$nama', '$umur', '$alamat', '$jenis_kelamin', '$telepon', 'new', '$email', '$password')");
 
 		if (mysqli_affected_rows($conn) > 0) {
-			$_SESSION['login_user'] = $password;
-			$_SESSION['user_id'] = mysqli_insert_id($conn);
+			ini_set( 'display_errors', 1 );   
+			error_reporting( E_ALL );  
+			$headers = "From: Admin SIPDP Pamatata Port";
+			$pesan = 'Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.<br><br>Link Verifikasi:<br>';
+			mail($email, 'Konfirmasi Akun', $pesan, $headers);
+			if (isset($id)) echo "<script>alert('Pesan berhasil dikirim ^_^'); document.location.href='".url('read_inbox')."&id=".$id."'</script>";
+			else echo "<script>alert('Pesan berhasil dikirim ^_^'); document.location.href='".url('inbox')."'</script>";
+			$time = date('Y-m-d H-i-s');
+			mysqli_query($conn, "INSERT INTO tb_send_message VALUES(null, '$to', '$subjek', '$pesan', '$time')");
 
 			$message = 'Akun anda berhasil dibuat';
-			plugins('success', $message, 'panel');
+			plugins('success', $message, 'login');
 		} else {
 			$message = 'Terjadi Kesalahan Saat Mendaftar';
 			plugins('error', $message, 'signin');

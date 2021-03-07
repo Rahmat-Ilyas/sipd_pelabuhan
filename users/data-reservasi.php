@@ -79,7 +79,8 @@ if (isset($get_data)) {
                 </td>
               <?php } else { ?>
                 <td>
-                  <a href="#" class="btn btn-danger btn-sm" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
+                  <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                  <a href="#" class="btn btn-danger btn-sm btn-block" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
                 </td>
               <?php } ?>
             </tr>
@@ -207,13 +208,147 @@ if (isset($get_data)) {
   </div>
 </div>
 
-<?php 
+<div hidden="" class="penumpang-area px-2" style="font-size: 12px;">
+  <?php foreach ($penumpang as $dta) { 
+    $id = $dta['id'];
+
+    $penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE id='$id'");
+    $pen = mysqli_fetch_assoc($penumpang);
+
+    $kpl_id = $pen['kapal_id'];
+    $kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kpl_id'");
+    $kpl = mysqli_fetch_assoc($kapal);
+
+    $ktgr = $pen['kategori'];
+    $kategori = mysqli_query($conn, "SELECT * FROM tb_harga WHERE kategori='$ktgr'");
+    $ktg = mysqli_fetch_assoc($kategori);
+
+    $nomor_tiket = $pen['nomor_tiket'];
+    $tujuan = $pen['tujuan'];
+    $kategori = $pen['kategori'];
+    $umur = $pen['umur'];
+    $tanggal1 = date('d M Y', strtotime($pen['tanggal_daftar']));
+    $kapal = $kpl['nama_kapal'];
+    $nama = $pen['nama'];
+    $jenis_kelamin = $pen['jenis_kelamin'];
+    $harga1 = $ktg['harga'];
+    $harga2 = $ktg['harga'];
+    $tanggal2 = date('d/m/Y', strtotime($pen['tanggal_daftar']));
+    ?>
+    <div class="border row mb-3">
+      <div class="col-md-8 row justify-content-center mr-2" style="border-right: dashed; width: 60%;">
+        <div class="col-sm-12 row">
+          <div class="col-md-6" style="width: 50%;">
+            <h3><i>Tiket Pamatata</i></h3>
+          </div>
+          <div class="col-md-6 text-right" style="width: 50%;">
+            <h4><?= $nomor_tiket ?></h4>
+          </div>
+        </div>
+        <div class="col-sm-12 text-center mt-2">
+          <h4><b>Pelabuhan Pamatata - <span id="tujuan"></span></b></h4>
+          <h4><b><span><?= $kategori ?></span> (<span><?= $umur ?></span>)</b></h4>
+          <h4><b><span><?= $tanggal1 ?></span> / <span id="kapal"><?= $kapal ?></span></b></h4>
+        </div>
+        <div class="col-sm-8" style="width: 80%;">
+          <h6><span><?= $nama ?></span> (<span><?= $jenis_kelamin ?></span>)</h6>
+          <h6>Rp. <span><?= $harga1 ?></span></h6>
+          <h6>NET: Rp. <span><?= $harga2 ?></span></h6>
+          <h6>Tanggal Pembelian: <span><?= $tanggal2 ?></span></h6>
+        </div>
+        <div class="col-sm-12 mt-4">
+          <span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+          <br><span>pamatata.port@gmail.com</span>
+          <br><span>+62821-9131-2813</span>
+        </div>
+      </div>
+      <div class="col-md-4 pt-5" style="width: 40%;">
+        <h6><b>Nomor Tiket:</b> <span><?= $nomor_tiket ?></span></h6>
+        <h6><b>Nama:</b> <span><?= $nama ?></span> (<span><?= $jenis_kelamin ?></span>)</h6>
+        <h6><b>Kategori:</b> <span><?= $kategori ?></span></h6>
+        <h6><b>Tanggal:</b> <span><?= $tanggal2 ?></span></h6>
+        <h6><b>Tujuan:</b> Pelabuhan Pamatata - <span><?= $tujuan ?></span></h6>
+        <h6><b>Harga:</b> Rp. <span><?= $harga1 ?></span></h6>
+        <div class="pt-5 mt-5">
+          <span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+          <br><span>pamatata.port@gmail.com</span>
+          <br><span>+62821-9131-2813</span>
+        </div>
+      </div>
+    </div>
+  <?php } 
+
+  if ($kendaraan > 0) {
+    foreach ($get_kendaraan as $ken) {
+      $gol_id = $ken['golongan_id'];
+      $golongan = mysqli_query($conn, "SELECT * FROM tb_golongan WHERE id='$gol_id'");
+      $gol = mysqli_fetch_assoc($golongan);
+      $kd_dftr = $ken['kd_pendaftaran'];
+      $get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_dftr'");
+      $pnp = mysqli_fetch_assoc($get_penumpang);
+      $get_transaksi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE kd_transaksi='$kd_dftr'");
+      $trns = mysqli_fetch_assoc($get_transaksi);
+      $kpl_id = $ken['kapal_id'];
+      $get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kpl_id'");
+      $kpl = mysqli_fetch_assoc($get_kapal); ?>
+      <div class="border row">
+        <div class="col-md-8 row justify-content-center mr-2" style="border-right: dashed; width: 60%;">
+          <div class="col-sm-12 row">
+            <div class="col-md-6" style="width: 50%;">
+              <h3><i>Tiket Pamatata</i></h3>
+            </div>
+            <div class="col-md-6 text-right" style="width: 50%;">
+              <h4><?= $ken['nomor_tiket'] ?></h4>
+            </div>
+          </div>
+          <div class="col-sm-12 text-center mt-2">
+            <h4><b>Pelabuhan Pamatata - <?= $pnp['tujuan'] ?></b></h4>
+            <h4><b><?= $gol['golongan'] ?> (<?= $gol['jenis_kendaraan'] ?>)</b></h4>
+            <h4><b><?= date('d M Y', strtotime($pnp['tanggal_daftar'])) ?> / <?= $kpl['nama_kapal'] ?></b></h4>
+          </div>
+          <div class="col-sm-8" style="width: 80%;">
+            <h6><?= $ken['merek_kendaraan'] ?> (<?= $ken['nama_sopir'] ?>)</h6>
+            <h6>Rp. <?= $trns['biaya_kendaraan'] ?></h6>
+            <h6>NET: Rp. <?= $trns['biaya_kendaraan'] ?></h6>
+            <h6>Tanggal Pembelian: <?= date('d/m/Y', strtotime($pnp['tanggal_daftar'])) ?></h6>
+          </div>
+          <div class="col-sm-12 mt-4">
+            <span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+            <br><span>pamatata.port@gmail.com</span>
+            <br><span>+62821-9131-2813</span>
+          </div>
+        </div>
+        <div class="col-md-4 pt-5" style="width: 40%;">
+          <h6><b>Nomor Tiket:</b> <?= $ken['nomor_tiket'] ?></h6>
+          <h6><b>Merek:</b> <?= $ken['merek_kendaraan'] ?></h6>
+          <h6><b>Supir/Pengendara:</b> <?= $ken['nama_sopir'] ?></h6>
+          <h6><b>Golongan:</b> <?= $gol['golongan'] ?> (<?= $gol['jenis_kendaraan'] ?>)</h6>
+          <h6><b>Tanggal:</b> <?= date('d/m/Y', strtotime($pnp['tanggal_daftar'])) ?></h6>
+          <h6><b>Tujuan:</b> Pelabuhan Pamatata - <?= $pnp['tujuan'] ?></h6>
+          <h6><b>Harga:</b> Rp. <?= $trns['biaya_kendaraan'] ?></h6>
+          <div class="pt-5 mt-5">
+            <span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+            <br><span>pamatata.port@gmail.com</span>
+            <br><span>+62821-9131-2813</span>
+          </div>
+        </div>
+      </div>
+    <?php }
+  } ?>
+</div>
+
+<?php
 require('template/footer.php');
 ?>
 
 <script>
   $(document).ready(function() {
     $('#reservasi').addClass('active');
+
+    $(document).on('click', '.print-tiket', function(e) {
+      e.preventDefault();
+      $('.penumpang-area').printArea();
+    });
 
     $('#batal-reservasi').click(function() {
       swal({
