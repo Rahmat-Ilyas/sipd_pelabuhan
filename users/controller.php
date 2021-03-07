@@ -56,9 +56,15 @@ function store($conn) {
 
 		if (mysqli_affected_rows($conn) > 0) {
 			ini_set( 'display_errors', 1 );   
-			error_reporting( E_ALL );  
-			$headers = "From: Admin SIPDP Pamatata Port";
-			$pesan = 'Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.<br><br>Link Verifikasi:<br>';
+			error_reporting( E_ALL );
+
+			$id = mysqli_insert_id($conn);
+			$headers = "From:admin-pamatata@tryapp.my.id";
+			$pesan = '
+Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.
+
+Link Verifikasi: 
+https://pamatata.tryapp.my.id/users/konfirmasi.php?user_id='.$id;
 			mail($email, 'Konfirmasi Akun', $pesan, $headers);
 
 			$message = 'Akun anda berhasil dibuat';
