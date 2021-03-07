@@ -60,10 +60,6 @@ function store($conn) {
 			$headers = "From: Admin SIPDP Pamatata Port";
 			$pesan = 'Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.<br><br>Link Verifikasi:<br>';
 			mail($email, 'Konfirmasi Akun', $pesan, $headers);
-			if (isset($id)) echo "<script>alert('Pesan berhasil dikirim ^_^'); document.location.href='".url('read_inbox')."&id=".$id."'</script>";
-			else echo "<script>alert('Pesan berhasil dikirim ^_^'); document.location.href='".url('inbox')."'</script>";
-			$time = date('Y-m-d H-i-s');
-			mysqli_query($conn, "INSERT INTO tb_send_message VALUES(null, '$to', '$subjek', '$pesan', '$time')");
 
 			$message = 'Akun anda berhasil dibuat';
 			plugins('success', $message, 'login');
