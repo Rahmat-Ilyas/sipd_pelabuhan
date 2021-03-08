@@ -86,7 +86,7 @@ if (isset($get_data)) {
                   <?php if ($reserv['status'] == 'Lunas') { ?>
                   <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
                 <?php } else { ?>
-                  <a href="#" class="btn btn-success btn-sm btn-disabled btn-block" id="blm-selesai"><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                  <a href="#" class="btn btn-success btn-sm btn-block" id="blm-selesai"><i class="material-icons">download</i> &nbsp;Download Tiket</a>
                 <?php }?>
                   <a href="#" class="btn btn-danger btn-sm btn-block" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
                 </td>
