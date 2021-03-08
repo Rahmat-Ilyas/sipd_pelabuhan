@@ -55,7 +55,12 @@ $result = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE status!='Batal' 
 														<td><?= $dta['umur']; ?> Thn</td>
 														<td><?= $dta['jenis_kelamin']; ?></td>
 														<td><?= $dta['kategori']; ?></td>
-														<td><?= $kpl['nama_kapal']; ?></td>
+														<td>
+															<?php 
+															if (isset($kpl['nama_kapal'])) echo $kpl['nama_kapal'];
+															else echo '<i>-Data kapal tidak ada-</i>';
+															?>
+														</td>
 														<td><?= $dta['tujuan']; ?></td>
 														<td class="text-center">
 															<?php 

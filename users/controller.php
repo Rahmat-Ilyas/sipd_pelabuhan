@@ -61,13 +61,13 @@ function store($conn) {
 			$id = mysqli_insert_id($conn);
 			$headers = "From:admin-pamatata@tryapp.my.id";
 			$pesan = '
-Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.
+			Pendaftaran anda sedang di proses. Silahkan klik tautan berikut untuk memverifikasi akun anda. Abaikan email ini jika anda merasa tidak pernah melakukan registrasi di SIPD Pamatata.
 
-Link Verifikasi: 
-https://pamatata.tryapp.my.id/users/konfirmasi.php?user_id='.$id;
+			Link Verifikasi: 
+			https://pamatata.tryapp.my.id/users/konfirmasi.php?user_id='.$id;
 			mail($email, 'Konfirmasi Akun', $pesan, $headers);
 
-			$message = 'Akun anda berhasil dibuat';
+			$message = 'Akun anda sedang di proses. Silahkan cek email anda untuk memverifikasi pendaftaran.';
 			plugins('success', $message, 'login');
 		} else {
 			$message = 'Terjadi Kesalahan Saat Mendaftar';
@@ -361,10 +361,40 @@ function config($conn) {
 		$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
 		$kpl = mysqli_fetch_assoc($kapal);
 
-		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kapal_id='$kapal_id' AND status='Panding'");
-		$jum_penumpang = mysqli_num_rows($penumpang);
+		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kapal_id='$kapal_id' AND status='Selesai'");
+
+		$jum_penumpang = 0;
+		foreach ($penumpang as $dta) {
+			$tanggal_daftar = $dta['tanggal_daftar'];
+			$tanggal_sekrng = date('Y-m-d H:i:s');
+			if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+				$jum_penumpang = $jum_penumpang + 1;
+			}
+		}
 
 		if ($jum_penumpang >= $kpl['kapasitas']) {
+			echo "full";
+		}
+	}
+
+	if (isset($_POST['cek_kps_penumpang1'])) {
+		$kapal_id = $_POST['kapal_id'];
+		$jumlah = $_POST['jumlah'];
+		$kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
+		$kpl = mysqli_fetch_assoc($kapal);
+
+		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kapal_id='$kapal_id' AND status='Selesai'");
+
+		$jum_penumpang = 0;
+		foreach ($penumpang as $dta) {
+			$tanggal_daftar = $dta['tanggal_daftar'];
+			$tanggal_sekrng = date('Y-m-d H:i:s');
+			if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+				$jum_penumpang = $jum_penumpang + 1;
+			}
+		}
+
+		if (($jum_penumpang + $jumlah) > $kpl['kapasitas']) {
 			echo "full";
 		}
 	}

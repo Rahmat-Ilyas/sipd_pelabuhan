@@ -192,6 +192,27 @@ require('template/footer.php');
       value = $(this).val();
       kapal_id = $('#kapal_id').val();
 
+      $.ajax({
+        url     : 'controller.php',
+        method  : "POST",
+        data    : { 
+          cek_kps_penumpang1: true,
+          kapal_id: kapal_id,
+          jumlah: value
+        },
+        success : function(data) {
+          if (data=='full') {
+            Swal.fire({
+              title: 'Kapal Penuh',
+              text: 'Mohon maaf, Jumlah penumpang yang anda masukkan telah melebihi kapasitas kapal.',
+              type: 'info'
+            });
+            one_only();
+            $('#jmlh_penumpang').val('1');
+          }
+        }
+      });
+
       if (!kapal_id) {
         $('#kapal_id').focus();
         Swal.fire({
@@ -199,6 +220,8 @@ require('template/footer.php');
           type: 'warning',
           timer: 2000,
         });
+        one_only();
+        $('#jmlh_penumpang').val('1');
       }
 
       if (value <= 0 && value != '') {

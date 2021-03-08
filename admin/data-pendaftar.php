@@ -95,7 +95,12 @@ foreach (array_unique($kd_trns) as $kd) {
 														<?= $kendaraan ?> Unit
 														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailKendaraan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
 													</td>
-													<td><?= $kapal['nama_kapal'] ?></td>
+													<td>
+														<?php 
+														if (isset($kapal['nama_kapal'])) echo $kapal['nama_kapal'];
+														else echo '<i>-Data kapal tidak ada-</i>';
+														?>
+													</td>
 													<td><?= $tujuan ?></td>
 													<td>Rp. <?= $dta['total_harga']; ?></td>
 													<td class="text-center">
