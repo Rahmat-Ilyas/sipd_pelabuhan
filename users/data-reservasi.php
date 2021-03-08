@@ -53,6 +53,7 @@ if (isset($get_data)) {
             <th>Total Harga</th>
             <?php if ($reserv && $reserv['status'] == 'Lunas') { ?>
               <th width="150">Status</th>
+              <th width="150">Aksi</th>
             <?php } else { ?>
               <th width="150">Aksi</th>
             <?php } ?>
@@ -77,9 +78,16 @@ if (isset($get_data)) {
                 <td class="text-center">
                   <span class="badge badge-pill badge-success" style="width: 60%;">Selesai</span>
                 </td>
-              <?php } else { ?>
                 <td>
                   <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                </td>
+              <?php } else { ?>
+                <td>
+                  <?php if ($reserv['status'] == 'Lunas') { ?>
+                  <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                <?php } else { ?>
+                  <a href="#" class="btn btn-success btn-sm btn-disabled" disabled="" data-toggle1="tooltip" data-original-title="Selesaikan pembayaran untuk mendownload"><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                <?php }?>
                   <a href="#" class="btn btn-danger btn-sm btn-block" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
                 </td>
               <?php } ?>
