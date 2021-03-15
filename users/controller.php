@@ -138,7 +138,7 @@ function store($conn) {
 		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', 'Belum Lunas')");
 
 		if (mysqli_affected_rows($conn) > 0) {
-			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi selambat lambatnya 1x24 jam';
+			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi selambat lambatnya 1 jam';
 			plugins('success', $message, 'data-reservasi');
 		} else {
 			$message = 'Terjadi kesalahan saat melakukan reservasi';
@@ -349,7 +349,7 @@ function config($conn) {
 
 	if (isset($_GET['reservasi_exits'])) {
 		if ($_GET['status'] == 'success') {
-			$message = 'Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1x24 Jam.';
+			$message = 'Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1 Jam.';
 		} else {
 			$message = 'Anda belum menyelesaikan reservasi sebelummnya. Selesaikan terlebih dahulu untuk melakukan reservasi lain.';
 		}
@@ -367,7 +367,7 @@ function config($conn) {
 		foreach ($penumpang as $dta) {
 			$tanggal_daftar = $dta['tanggal_daftar'];
 			$tanggal_sekrng = date('Y-m-d H:i:s');
-			if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+			if (strtotime($tanggal_daftar) + 3600 > strtotime($tanggal_sekrng)) {
 				$jum_penumpang = $jum_penumpang + 1;
 			}
 		}
@@ -389,7 +389,7 @@ function config($conn) {
 		foreach ($penumpang as $dta) {
 			$tanggal_daftar = $dta['tanggal_daftar'];
 			$tanggal_sekrng = date('Y-m-d H:i:s');
-			if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+			if (strtotime($tanggal_daftar) + 3600 > strtotime($tanggal_sekrng)) {
 				$jum_penumpang = $jum_penumpang + 1;
 			}
 		}

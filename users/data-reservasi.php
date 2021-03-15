@@ -15,7 +15,7 @@ if (isset($get_data)) {
   $tanggal_daftar = $tgl['tanggal_daftar'];
   $tanggal_sekrng = date('Y-m-d H:i:s');
 
-  if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+  if (strtotime($tanggal_daftar) + 3600 > strtotime($tanggal_sekrng)) {
     $reserv = $get_data;
     $penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
     foreach ($penumpang as $pn) {
@@ -111,9 +111,9 @@ if (isset($get_data)) {
               <span aria-hidden="true"><i class="material-icons">clear</i></span>
             </button>
             <?php if ($reserv['status'] == 'Lunas') { ?>
-              <b>Info Alert:</b> Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1x24 Jam.
+              <b>Info Alert:</b> Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1 Jam.
             <?php } else { ?>
-              <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 86400) ?></b> atau reservasi akan di batalkan.
+              <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 3600) ?></b> atau reservasi akan di batalkan.
             <?php } ?>
           </div>
         </div>

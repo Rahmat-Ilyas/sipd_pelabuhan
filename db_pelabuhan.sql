@@ -81,7 +81,7 @@ CREATE TABLE `tb_harga` (
   `from_age` int NOT NULL,
   `to_age` int NOT NULL,
   `harga` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
 --
 -- Dumping data untuk tabel `tb_harga`
@@ -174,7 +174,7 @@ CREATE TABLE `tb_pengumuman` (
   `judul` varchar(255) DEFAULT NULL,
   `pengumuman` text,
   `waktu` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
 --
 -- Dumping data untuk tabel `tb_pengumuman`

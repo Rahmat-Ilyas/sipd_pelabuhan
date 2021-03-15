@@ -9,7 +9,7 @@ if (isset($reserv)) {
   $tanggal_daftar = $tgl['tanggal_daftar'];
   $tanggal_sekrng = date('Y-m-d H:i:s');
 
-  if (strtotime($tanggal_daftar) + 86400 > strtotime($tanggal_sekrng)) {
+  if (strtotime($tanggal_daftar) + 3600 > strtotime($tanggal_sekrng)) {
     if ($reserv['status'] == 'Lunas') $status = 'success';
     else $status = 'panding';
     header("Location: controller.php?reservasi_exits=true&status=".$status);

@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Makassar");
 session_start();
-$conn = mysqli_connect("localhost","rahmat_ryu","","db_pelabuhan");
+$conn = mysqli_connect("localhost","root","","db_pelabuhan");
 
 // Batalkan Reservasi
 $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Belum Lunas'");
@@ -12,7 +12,7 @@ foreach ($reservasi as $dta) {
 	$tanggal_daftar = $tgl['tanggal_daftar'];
 	$tanggal_sekrng = date('Y-m-d H:i:s');
 
-	if (strtotime($tanggal_daftar) + 86400 < strtotime($tanggal_sekrng)) {
+	if (strtotime($tanggal_daftar) + 3600 < strtotime($tanggal_sekrng)) {
 		// Update Transaksi
 		mysqli_query($conn, "UPDATE tb_transaksi SET status='Batal' WHERE kd_transaksi='$kd_daftar'");
 		// Update Penumpang
