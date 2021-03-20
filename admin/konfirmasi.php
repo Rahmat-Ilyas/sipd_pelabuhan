@@ -2,22 +2,10 @@
 require('template/header.php');
 
 $result = [];
-$kd_trns = [];
-$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE status!='Batal' ORDER BY id DESC");
-foreach ($penumpang as $pn) {
-	$tgl_daftar = $pn['tanggal_daftar'];
-	$tgl_sekrng = date('Y-m-d H:i:s');
-
-	if (strtotime($tgl_daftar) + 86400 > strtotime($tgl_sekrng)) {
-		$kd_trns[] = $pn['kd_pendaftaran'];
-	}
-}
-
-foreach (array_unique($kd_trns) as $kd) {
-	$transaksi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status!='Batal' AND kd_transaksi='$kd'");
-	$res = mysqli_fetch_assoc($transaksi);
-	if ($res) {
-		$result[] = $res;
+$transaksi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Belum Lunas'");
+foreach ($transaksi as $dta) {
+	if ($dta['foto_transaksi'] != NULL) {
+		$result[] = $dta;
 	}
 }
 
@@ -28,7 +16,7 @@ foreach (array_unique($kd_trns) as $kd) {
 	<div class="">
 		<div class="page-title">
 			<div class="title_left" style="width: 100%">
-				<h3>Data Pendaftar (User Yang Melakukan Reservasi)</small></h3>
+				<h3>Konfirmasi Pembayaran (Via Transfer)</small></h3>
 			</div>
 		</div>
 
@@ -52,8 +40,7 @@ foreach (array_unique($kd_trns) as $kd) {
 												<th>Kapal</th>
 												<th>Tujuan</th>
 												<th>Transaksi</th>
-												<th>Status</th>
-												<th width="50">Aksi</th>
+												<th>Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -103,23 +90,8 @@ foreach (array_unique($kd_trns) as $kd) {
 													</td>
 													<td><?= $tujuan ?></td>
 													<td>Rp. <?= $dta['total_harga']; ?></td>
-													<td class="text-center">
-														<?php 
-														if ($status == 'Selesai') $color = 'success'; 
-														else if ($status == 'Panding') $color = 'warning'; 
-														else if ($status == 'Batal') $color = 'danger'; 
-														?>
-														<span class="badge badge-pill badge-<?= $color ?>"><?= $status ?></span>
-													</td>
 													<td>
-														<?php 
-														if ($status == 'Selesai') { ?>
-															<a href="transaksi.php?find_code=<?= $dta['kd_transaksi'] ?>&cetak=true" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
-														<?php } else { 
-															if ($dta['foto_transaksi']) $link = 'konfirmasi.php?find_code='.$dta['id'];
-															else $link = 'transaksi.php?find_code='.$dta['kd_transaksi']; ?>
-															<a href="<?= $link ?>" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
-														<?php } ?>
+														<a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#konfirPembayaran<?= $dta['id'] ?>" data-toggle1="tooltip" data-original-title="Proses Pembayaran" style="font-size: 11px;"><i class="fa fa-hourglass-2"></i> Proses Pembayaran</a>
 													</td>
 												</tr>
 												<?php $no = $no + 1; 
@@ -162,6 +134,40 @@ foreach (array_unique($kd_trns) as $kd) {
 	$get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
 	$kapal = mysqli_fetch_assoc($get_kapal);
 	?>
+	<!-- Modal Konfirmasi -->
+	<div class="modal fade" id="konfirPembayaran<?= $dta['id'] ?>" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Konfirmasi Pembayaran</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+					<ul class="list-group list-group-flush mb-3">
+						<li class="list-group-item row">
+							<b class="col-sm-4 p-0">Kode Pendaftaran: </b>
+							<span class="col-sm-8 p-0"><?= $dta['kd_transaksi'] ?></span>
+						</li>
+						<li class="list-group-item row">
+							<b class="col-sm-4 p-0">Nama: </b>
+							<span class="col-sm-8 p-0"><?= $usr['nama'] ?></span>
+						</li>
+					</ul>
+					<h5 class="text-center"><u>Foto Bukti Pembayaran</u></h5>
+					<img src="images/transaksi/transaksi.png" style="width: 95%; height: 350px;">
+					<div class="px-5">
+						<hr>
+						<div class="text-center">
+							<a href="controller.php?proses_pembayaran=accept&id=<?= $dta['id'] ?>" role="button" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i> Konfirmasi Pembayaran</a>
+							<a href="controller.php?proses_pembayaran=refuse&id=<?= $dta['id'] ?>" role="button" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i> Tolak Pembayaran</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<!-- Modal Detail User -->
 	<div class="modal fade" id="detailUser<?= $dta['id'] ?>" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -302,3 +308,10 @@ foreach (array_unique($kd_trns) as $kd) {
 require('template/footer.php');
 ?>
 
+<script>
+	$(document).ready(function($) {
+		<?php if (isset($_GET['find_code'])) { ?>
+			$('#konfirPembayaran<?= $_GET['find_code'] ?>').modal('show');
+		<?php } ?>
+	});
+</script>

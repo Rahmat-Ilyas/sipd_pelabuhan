@@ -17,7 +17,7 @@ foreach (array_unique($kd_trns) as $kd) {
 		$kpl = mysqli_fetch_assoc($kapal);
 		$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd'");
 		$pnp = mysqli_fetch_assoc($penumpang);
-		$res['nama_kapal'] = $kpl['nama_kapal'];
+		$res['nama_kapal'] = $kpl ? $kpl['nama_kapal'] : '<i>-Data kapal tidak ada-</i>';
 		$res['tanggal_daftar'] = $pnp['tanggal_daftar'];
 		$res['tujuan'] = $pnp['tujuan'];
 		$res['status'] = $pnp['status'];

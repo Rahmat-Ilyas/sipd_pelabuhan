@@ -230,6 +230,14 @@ function update($conn) {
 			plugins('error', 'update. Transaksi gagal', 'transaksi');
 		}
 	}
+
+	if (isset($_GET['proses_pembayaran'])) {
+		if ($_GET['proses_pembayaran'] == 'accept') {
+
+		} else if ($_GET['proses_pembayaran'] == 'refuse') {
+
+		} 
+	}
 }
 
 // ACTION DELETE 

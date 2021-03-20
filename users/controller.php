@@ -135,7 +135,7 @@ function store($conn) {
 		$biaya_kendaraan = $harga_kendaraan;
 		$total_harga = $total_harga_tiket + $harga_kendaraan;
 		
-		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', 'Belum Lunas')");
+		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', NULL, 'Belum Lunas')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi selambat lambatnya 1 jam';

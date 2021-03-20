@@ -19,6 +19,14 @@ $admin = mysqli_fetch_assoc($get_admin);
 
 $get_pesan = mysqli_query($conn, "SELECT * FROM tb_pesan WHERE status='send'");
 $jumlah_pesan = mysqli_num_rows($get_pesan);
+
+$jum_konfir = 0;
+$konfirmasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Belum Lunas'");
+foreach ($konfirmasi as $dta) {
+  if ($dta['foto_transaksi'] != NULL) {
+    $jum_konfir = $jum_konfir + 1;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +90,17 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
                 <li>
-                  <a href="transaksi.php"><i class="fa fa-calculator"></i> Transaksi Pembayaran</a>
+                  <a><i class="fa fa-calculator"></i> Transaksi Pembayaran<span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="transaksi.php">Transaksi Langsung</a></li>
+                    <li>
+                      <a href="konfirmasi.php">Konfirmasi Pembayaran 
+                        <?php if ($jum_konfir > 0) {  ?>
+                          <span class="badge badge-lg badge-danger pull-right" style="font-size: 12px;"><?= $jum_konfir ?></span>
+                        <?php } ?>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <a href="data-pendaftar.php"><i class="fa fa-wpforms"></i> Data Pendaftar</a>
@@ -99,6 +117,7 @@ $jumlah_pesan = mysqli_num_rows($get_pesan);
                     <li><a href="riwayat-kendaraan.php">Riwayat Kendaraan</a></li>
                   </ul>
                 </li>
+                <li><a href="penumpang-kapal.php"><i class="fa fa-ship"></i> Data Penumpang Kapal</a></li>
                 <li><a><i class="fa fa-database"></i> Kelola Data <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="data-kapal.php">Data Kapal</a></li>
