@@ -13,7 +13,6 @@ if (isset($_GET['find_code'])) {
 	} else {
 		$query_pn = "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd' AND status='Panding'";
 		$query_tr = "SELECT * FROM tb_transaksi WHERE kd_transaksi='$kd' AND status='Belum Lunas'";
-
 	}
 
 	$penumpang = mysqli_query($conn, $query_pn);
@@ -135,9 +134,13 @@ foreach ($get_code as $opt) {
 						<div class="text-center">
 							<?php if ($trs) { ?>
 								<button type="button" class="btn btn-info btn-sm" id="cetak-transaksi"><i class="fa fa-print"></i> Cetak Detai Transaksi</button>
-								<?php if (!isset($_GET['cetak'])) { ?>
-									<button type="button" class="btn btn-success btn-sm" id="selesai-transaksi"><i class="fa fa-check"></i> Selesaikan Reservasi</button>
-								<?php } ?>
+								<?php if (!isset($_GET['cetak'])) { 
+									if (isset($trs['foto_transaksi'])) { ?>
+										<a href="konfirmasi.php?find_code=<?= $trs['id'] ?>" role="button" class="btn btn-success btn-sm"><i class="fa fa-hourglass-2"></i> Proses Pembayaran</a>
+									<?php } else { ?>
+										<button type="button" class="btn btn-success btn-sm" id="selesai-transaksi"><i class="fa fa-check"></i> Selesaikan Reservasi</button>
+									<?php } 
+								} ?>
 							<?php } else { ?>
 								<button type="button" class="btn btn-info btn-sm" disabled=""><i class="fa fa-print"></i> Cetak Detai Transaksi</button>
 								<button type="button" class="btn btn-success btn-sm" disabled=""><i class="fa fa-check"></i> Selesaikan Reservasi</button>

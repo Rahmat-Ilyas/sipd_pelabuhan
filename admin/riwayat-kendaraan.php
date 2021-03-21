@@ -38,61 +38,57 @@ foreach (array_unique($kd_trns) as $kd) {
 
 		<div class="clearfix"></div>
 
-		<div class="row">
-			<div class="col-md-12 col-sm-12 ">
-				<div class="x_panel">
-					<div class="x_content">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="card-box table-responsive">
-									<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
-										<thead>
-											<tr>
-												<th width="10">No</th>
-												<th>Tanggal</th>
-												<th width="90">Nomor Tiket</th>
-												<th width="70">Golongan</th>
-												<th>Sopir</th>
-												<th>Merek</th>
-												<th width="60">Plat</th>
-												<th>Kapal</th>
-												<th>Tujuan</th>
-												<th>Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php $no = 1; foreach ($result as $dta) {
-												$gol_id = $dta['golongan_id'];
-												$golongan =   mysqli_query($conn, "SELECT * FROM tb_golongan WHERE id='$gol_id'");
-												$gol = mysqli_fetch_assoc($golongan); ?>
-												<tr>
-													<td><?= $no; ?></td>
-													<td><?= date('d/m/Y', strtotime($dta['tanggal_daftar'])); ?></td>
-													<td><?= $dta['nomor_tiket']; ?></td>
-													<td>
-														<?= $gol['golongan']; ?>
-														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailGolongan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
-													</td>
-													<td><?= $dta['nama_sopir']; ?></td>
-													<td><?= $dta['merek_kendaraan']; ?></td>
-													<td><?= $dta['nomor_kendaraan']; ?></td>
-													<td><?= $dta['nama_kapal']; ?></td>
-													<td><?= $dta['tujuan']; ?></td>
-													<td class="text-center">
-														<?php 
-														if ($dta['status'] == 'Selesai') $color = 'success'; 
-														else if ($dta['status'] == 'Panding') $color = 'warning'; 
-														else if ($dta['status'] == 'Batal') $color = 'danger'; 
-														?>
-														<span class="badge badge-pill badge-<?= $color ?>"><?= $dta['status'] ?></span>
-													</td>
-												</tr>
-												<?php $no = $no + 1; 
-											} ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card-box table-responsive">
+							<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
+								<thead>
+									<tr>
+										<th width="10">No</th>
+										<th>Tanggal</th>
+										<th width="90">Nomor Tiket</th>
+										<th width="70">Golongan</th>
+										<th>Sopir</th>
+										<th>Merek</th>
+										<th width="60">Plat</th>
+										<th>Kapal</th>
+										<th>Tujuan</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php $no = 1; foreach ($result as $dta) {
+										$gol_id = $dta['golongan_id'];
+										$golongan =   mysqli_query($conn, "SELECT * FROM tb_golongan WHERE id='$gol_id'");
+										$gol = mysqli_fetch_assoc($golongan); ?>
+										<tr>
+											<td><?= $no; ?></td>
+											<td><?= date('d/m/Y', strtotime($dta['tanggal_daftar'])); ?></td>
+											<td><?= $dta['nomor_tiket']; ?></td>
+											<td>
+												<?= $gol['golongan']; ?>
+												<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailGolongan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
+											</td>
+											<td><?= $dta['nama_sopir']; ?></td>
+											<td><?= $dta['merek_kendaraan']; ?></td>
+											<td><?= $dta['nomor_kendaraan']; ?></td>
+											<td><?= $dta['nama_kapal']; ?></td>
+											<td><?= $dta['tujuan']; ?></td>
+											<td class="text-center">
+												<?php 
+												if ($dta['status'] == 'Selesai') $color = 'success'; 
+												else if ($dta['status'] == 'Panding') $color = 'warning'; 
+												else if ($dta['status'] == 'Batal') $color = 'danger'; 
+												?>
+												<span class="badge badge-pill badge-<?= $color ?>"><?= $dta['status'] ?></span>
+											</td>
+										</tr>
+										<?php $no = $no + 1; 
+									} ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

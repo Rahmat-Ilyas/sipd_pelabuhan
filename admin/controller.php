@@ -147,13 +147,16 @@ function update($conn) {
 		$id = $_POST['id'];
 		$nama = $_POST['nama'];
 		$username = $_POST['username'];
+		$nama_bank = $_POST['nama_bank'];
+		$no_rekening = $_POST['no_rekening'];
+		$atas_nama = $_POST['atas_nama'];
 		if ($_POST['password'] != '') {
 			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		} else {
 			$password = $_POST['old_password'];
 		}
 
-		$update = mysqli_query($conn, "UPDATE tb_admin SET nama='$nama', username='$username', password='$password' WHERE id='$id'");
+		$update = mysqli_query($conn, "UPDATE tb_admin SET nama='$nama', username='$username', password='$password', nama_bank='$nama_bank', no_rekening='$no_rekening', atas_nama='$atas_nama' WHERE id='$id'");
 
 		if ($update) {
 			plugins('success', 'update', 'index');
@@ -231,6 +234,7 @@ function update($conn) {
 		}
 	}
 
+	// KONFIRMASI PEMBAYARAN
 	if (isset($_GET['proses_pembayaran'])) {
 		$kd = $_GET['find_code'];
 		if ($_GET['proses_pembayaran'] == 'accept') {

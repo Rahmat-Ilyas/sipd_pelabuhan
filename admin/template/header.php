@@ -189,6 +189,7 @@ foreach ($konfirmasi as $dta) {
             <form method="POST" action="controller.php">
               <div class="modal-body">
                 <div class="container px-5">
+                  <h6><u>Profile</u></h6>
                   <div class="form-group">
                     <label class="col-form-label">Nama</label>
                     <input type="hidden" name="id" value="<?= $admin['id'] ?>">
@@ -203,6 +204,20 @@ foreach ($konfirmasi as $dta) {
                     <input type="text" class="form-control" placeholder="Ganti Password..." name="password" autocomplete="off" value="">
                     <input type="hidden" name="old_password" value="<?= $admin['password'] ?>">
                     <span class="text-info" style="font-size: 14px">Note: Masukkan password baru untuk mengganti password</span>
+                  </div>
+                  <hr>
+                  <h6><u>Informasi Bank</u></h6>
+                  <div class="form-group">
+                    <label class="col-form-label">Nama Bank</label>
+                    <input type="text" class="form-control" required="" placeholder="Nama Bank..." name="nama_bank" autocomplete="off" value="<?= $admin['nama_bank'] ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Nomor Rekening</label>
+                    <input type="number" class="form-control" required="" placeholder="Nomor Rekening..." name="no_rekening" autocomplete="off" value="<?= $admin['no_rekening'] ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Atas Nama</label>
+                    <input type="text" class="form-control" required="" placeholder="Atas Nama..." name="atas_nama" autocomplete="off" value="<?= $admin['atas_nama'] ?>">
                   </div>
                 </div>
               </div>
