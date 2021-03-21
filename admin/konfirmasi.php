@@ -154,12 +154,12 @@ foreach ($transaksi as $dta) {
 						</li>
 					</ul>
 					<h5 class="text-center"><u>Foto Bukti Pembayaran</u></h5>
-					<img src="images/transaksi/transaksi.png" style="width: 95%; height: 350px;">
+					<img src="images/transaksi/<?= $dta['foto_transaksi'] ?>" style="width: 100%; height: 350px;">
 					<div class="px-5">
 						<hr>
 						<div class="text-center">
-							<a href="controller.php?proses_pembayaran=accept&id=<?= $dta['id'] ?>" role="button" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i> Konfirmasi Pembayaran</a>
-							<a href="controller.php?proses_pembayaran=refuse&id=<?= $dta['id'] ?>" role="button" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i> Tolak Pembayaran</a>
+							<a href="controller.php?proses_pembayaran=accept&find_code=<?= $dta['kd_transaksi'] ?>" role="button" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i> Konfirmasi Pembayaran</a>
+							<a href="controller.php?proses_pembayaran=refuse&find_code=<?= $dta['kd_transaksi'] ?>" role="button" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i> Tolak Pembayaran</a>
 						</div>
 					</div>
 				</div>

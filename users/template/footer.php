@@ -18,6 +18,7 @@
   <!--  Google Maps Plugin    -->
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+  <script src="assets/js/jquery.uploadPreview.min.js" type="text/javascript"></script>
   <script src="../admin/vendors/sweetalert2/sweetalert2.all.min.js"></script>
   <script src="../admin/build/js/jquery.PrintArea.js"></script>
 

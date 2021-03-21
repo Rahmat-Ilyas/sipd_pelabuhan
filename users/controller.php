@@ -138,7 +138,7 @@ function store($conn) {
 		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', NULL, 'Belum Lunas')");
 
 		if (mysqli_affected_rows($conn) > 0) {
-			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi selambat lambatnya 1 jam';
+			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi atau lakukan transaksi via transfer sesuai intruksi. Selambat lambatnya 1 jam';
 			plugins('success', $message, 'data-reservasi');
 		} else {
 			$message = 'Terjadi kesalahan saat melakukan reservasi';
@@ -166,6 +166,26 @@ function store($conn) {
 // ACTION EDITE 
 update($conn);
 function update($conn) {
+	if (isset($_POST['upload_transaksi'])) {
+		$id = $_POST['id'];
+
+		// SET FOTO 
+		$foto = $_FILES['image']['name'];
+		$ext = pathinfo($foto, PATHINFO_EXTENSION);
+		$nama_foto = 'bukti_transaksi-'.sprintf('%09s', $id).".".$ext;
+		$file_tmp = $_FILES['image']['tmp_name'];
+		move_uploaded_file($file_tmp, '../admin/images/transaksi/'.$nama_foto);
+
+		$update = mysqli_query($conn, "UPDATE tb_transaksi SET foto_transaksi='$nama_foto' WHERE id='$id'");;
+		if ($update) {
+			$message = 'Bukti pembayaran berhasil di upload, kami akan segera memprose pembayaran anda.';
+			plugins('success', $message, 'data-reservasi');
+		} else {
+			$message = 'Terjadi kesalahan saat mengupload, silahkan coba kembali';
+			plugins('error', $message, 'data-reservasi');
+		}
+	}
+
 	if (isset($_GET['batalkan_reservasi'])) {
 		$resevasi_id = $_GET['resevasi_id'];
 		$transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Batal' WHERE kd_transaksi='$resevasi_id'");

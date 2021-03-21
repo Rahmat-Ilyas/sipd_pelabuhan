@@ -232,10 +232,25 @@ function update($conn) {
 	}
 
 	if (isset($_GET['proses_pembayaran'])) {
+		$kd = $_GET['find_code'];
 		if ($_GET['proses_pembayaran'] == 'accept') {
+			$transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Lunas' WHERE kd_transaksi='$kd'");
+			$penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Selesai' WHERE kd_pendaftaran='$kd'");
 
+			if ($transaksi && $penumpang) {
+				plugins('success', 'proses. Pembayaran telah dikonfirmasi', 'konfirmasi');
+			} else {
+				plugins('error', 'proses', 'transaksi');
+			}
 		} else if ($_GET['proses_pembayaran'] == 'refuse') {
+			$transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Batal' WHERE kd_transaksi='$kd'");
+			$penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Batal' WHERE kd_pendaftaran='$kd'");
 
+			if ($transaksi && $penumpang) {
+				plugins('success', 'proses. Pembayaran telah ditolak', 'konfirmasi');
+			} else {
+				plugins('error', 'proses', 'transaksi');
+			}
 		} 
 	}
 }

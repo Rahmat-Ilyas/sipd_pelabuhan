@@ -4,6 +4,9 @@ require('template/header.php');
 $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
 $get_data = mysqli_fetch_assoc($reservasi);
 
+$admin = mysqli_query($conn, "SELECT * FROM tb_admin");
+$rek = mysqli_fetch_assoc($admin);
+
 $orang = 0;
 $kendaraan = 0;
 $tanggal = '';
@@ -54,6 +57,8 @@ if (isset($get_data)) {
             <?php if ($reserv && $reserv['status'] == 'Lunas') { ?>
               <th width="150">Status</th>
               <th width="150">Aksi</th>
+            <?php } else if(isset($reserv['foto_transaksi'])) { ?>
+              <th width="150">Status</th>
             <?php } else { ?>
               <th width="150">Aksi</th>
             <?php } ?>
@@ -66,7 +71,7 @@ if (isset($get_data)) {
               <td><?= date('d/m/Y H:i', strtotime($tanggal)) ?></td>
               <td>
                 <?= $orang ?> Orang 
-                <a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Penumpang" data-target="#detailPenumpang"><i class="material-icons" style="font-size: 16px;">info_outline</i></a>
+                <a href="#" class="text-secondary" data-toggle1="tooltip" data-original-title="Detail Penumpang" data-toggle="modal" data-target="#detailPenumpang"><i class="material-icons" style="font-size: 16px;">info_outline</i></a>
               </td>
               <td>
                 <?= $kendaraan ?> Unit
@@ -81,13 +86,17 @@ if (isset($get_data)) {
                 <td>
                   <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
                 </td>
+              <?php } else if (isset($reserv['foto_transaksi'])) { ?>
+                <td class="text-center">
+                  <span class="badge badge-pill badge-info" style="width: 60%;">Diproses</span>
+                </td>
               <?php } else { ?>
                 <td>
                   <?php if ($reserv['status'] == 'Lunas') { ?>
-                  <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
-                <?php } else { ?>
-                  <a href="#" class="btn btn-success btn-sm btn-block" id="blm-selesai"><i class="material-icons">download</i> &nbsp;Download Tiket</a>
-                <?php }?>
+                    <a href="#" class="btn btn-success btn-sm btn-block print-tiket" data-id="<?= $reserv['id'] ?>" id=""><i class="material-icons">download</i> &nbsp;Download Tiket</a>
+                  <?php } else { ?>
+                    <a href="#" class="btn btn-success btn-sm btn-block" id="blm-selesai"><i class="material-icons">credit_card</i> &nbsp;Selesaikan Reservasi</a>
+                  <?php }?>
                   <a href="#" class="btn btn-danger btn-sm btn-block" id="batal-reservasi"><i class="material-icons">highlight_remove</i> &nbsp;Batalkan Reservasi</a>
                 </td>
               <?php } ?>
@@ -112,12 +121,87 @@ if (isset($get_data)) {
             </button>
             <?php if ($reserv['status'] == 'Lunas') { ?>
               <b>Info Alert:</b> Anda baru-baru ini telah menyelesaikan reservasi. Untuk sementara anda belum bisa melakukan reservasi dalam waktu 1 Jam.
+            <?php } else if (isset($reserv['foto_transaksi'])) { ?>
+              <b>Info Alert:</b> Pembayaran anda sedang diproses, silahkan tunggu beberapa saat. Juka pembayaran anda masih belum diposes dalam beberapa saat, silahkan hubungi staf di loket
             <?php } else { ?>
-              <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 3600) ?></b> atau reservasi akan di batalkan.
+              <b>Info Alert:</b> Silahkan melakukan pembayaran di loket dengan menunjukkan Kode Transaksi atau lakukan transaksi via transfer sesuai intruksi. Lakukan pembayaran sebelum <b><?= date('d/m/Y H:i', strtotime($tanggal) + 3600) ?></b> atau reservasi akan di batalkan.
             <?php } ?>
           </div>
         </div>
       <?php } ?>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detail Penumpang -->
+<div class="modal fade" id="uploadPembayaran" role="dialog" style="z-index: 9999">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Pembayaran Via Transefer Bank</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <div class="modal-body">
+        Untuk menyelesaikan pembayaran, silahkan transfer ke rekening bank berikut:<br><br>
+        Nama Bank: <b><?= $rek['nama_bank'] ?></b><br>
+        Nomor Rekening: <b><a href="#"><?= $rek['no_rekening'] ?></a></b><br>
+        Atas Nama: <b><?= $rek['atas_nama'] ?></b><br>
+        Jumlah Transfer: <b>Rp.<?= number_format($reserv['total_harga']) ?></b><br><br>
+        Setelah melakukan transfer, silahkan upload bukti pembayara yang telah di sediakan
+        <hr>
+        <h5 class="text-center">Upload Bukti Transfer</h5>
+        <style type="text/css">
+          #image-preview {
+            width: 400px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background-color: #ecf0f1;
+            color: #bdc3c7;
+            border: dashed 4px;
+          }
+          #image-preview > input {
+            line-height: 200px;
+            font-size: 200px;
+            position: absolute;
+            opacity: 0;
+            z-index: 10;
+          }
+          #image-preview > label {
+            position: absolute;
+            z-index: 5;
+            opacity: 0.8;
+            cursor: pointer;
+            background-color: #4c5667;
+            color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            line-height: 50px;
+            text-transform: uppercase;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            text-align: center;
+          }
+        </style>
+        <form method="POST" action="controller.php" enctype="multipart/form-data">
+          <div class="row justify-content-center">
+            <div class="col-md-6" id="image-preview">
+              <label for="image-upload" id="image-label">Pilih Foto</label>
+              <input type="file" name="image" id="image-upload" required="">
+              <input type="hidden" name="id" value="<?= $reserv['id'] ?>">
+            </div>
+            <div class="col-md-12 text-center">
+              <button class="btn btn-info" type="submit" name="upload_transaksi"><i class="material-icons">upload</i> Upload Bukti Transfer</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -373,10 +457,22 @@ require('template/footer.php');
 
     $('#blm-selesai').click(function(event) {
       swal({
-        title: "Selesaikan Pembayaran",
-        html: "Selesaikan pembayaran untuk mendownload",
-        type: "warning",
+        title: "Selesaikan Reservasi",
+        html: `
+        <h4>Silahkan lakukan pembayaran sesuai intruksi berikut:</h4>
+        <ol class="text-left">
+        <li>Anda dapat melakukan pembayaran langsung di loket pelabuhan Pamatata dengan menunjukkan kode transaksi Anda.</li>
+        <li>Anda juga dapat melakukan pembayara via transfer ke rekening bank pamata. Untuk proses lebih lanjut, silahkan klik <a href="" data-toggle="modal" data-target="#uploadPembayaran"><b>Pembayaran Via Transfer</b></a></li>
+        </ol>
+        `,
+        type: "info",
       });
+    });
+
+    $.uploadPreview({
+      input_field: "#image-upload",
+      preview_box: "#image-preview",
+      label_field: "#image-label"
     });
   });  
 </script>
