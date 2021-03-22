@@ -37,11 +37,11 @@ foreach ($get_kapal as $kpl) {
 									$result = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kapal_id='$kapal_id' ORDER BY id DESC"); ?>
 									<div class="panel">
 										<a class="panel-heading" role="tab" id="headingp<?= $kpl['id'] ?>" data-toggle="collapse" data-parent="#accordion" href="#collapsep<?= $kpl['id'] ?>" aria-expanded="true" aria-controls="collapsep<?= $kpl['id'] ?>">
-											<h4 class="panel-title"><?= $kpl['nama_kapal'] ?> (<?= $kpl['total_penumpang'] ?> Penumpang) - <?= $kpl['keterangan'] ?></h4>
+											<h4 class="panel-title"><b><?= $kpl['nama_kapal'] ?> (<?= $kpl['total_penumpang'] ?> Penumpang) - <?= $kpl['keterangan'] ?></b></h4>
 										</a>
-										<div id="collapsep<?= $kpl['id'] ?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingp<?= $kpl['id'] ?>">
+										<div id="collapsep<?= $kpl['id'] ?>" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingp<?= $kpl['id'] ?>">
 											<div class="panel-body pt-2">
-												<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
+												<table id="datatable" class="datatables table table-striped table-bordered" style="width:100%; font-size: 12px;">
 													<thead>
 														<tr>
 															<th width="10">No</th>
@@ -53,7 +53,6 @@ foreach ($get_kapal as $kpl) {
 															<th>Kategori</th>
 															<th>Tujuan</th>
 															<th>Status</th>
-															<th>Aksi</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -77,9 +76,6 @@ foreach ($get_kapal as $kpl) {
 																	else if ($dta['status'] == 'Batal') $color = 'danger'; 
 																	?>
 																	<span class="badge badge-pill badge-<?= $color ?>"><?= $dta['status'] ?></span>
-																</td>
-																<td>
-																	s
 																</td>
 															</tr>
 															<?php $no = $no + 1; 

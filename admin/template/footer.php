@@ -77,6 +77,7 @@
 <script>
   $(document).ready(function() {
     $(document).tooltip({ selector: '[data-toggle1="tooltip"]' });
+    $('.datatables').dataTable();
 });
 </script>
 
