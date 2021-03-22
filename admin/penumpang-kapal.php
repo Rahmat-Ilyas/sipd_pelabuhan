@@ -1,6 +1,7 @@
 <?php 
 require('template/header.php');
 
+$results = mysqli_query($conn, "SELECT * FROM tb_penumpang");
 $get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal");
 
 $kapal = [];
@@ -97,7 +98,7 @@ foreach ($get_kapal as $kpl) {
 </div>
 <!-- /page content -->
 
-<?php foreach ($result as $dta) { ?>
+<?php foreach ($results as $dta) { ?>
 	<!-- Modal Detail Penumpang -->
 	<div class="modal fade" id="detailUser<?= $dta['id'] ?>" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
