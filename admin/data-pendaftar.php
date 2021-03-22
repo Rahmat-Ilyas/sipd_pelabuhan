@@ -34,100 +34,96 @@ foreach (array_unique($kd_trns) as $kd) {
 
 		<div class="clearfix"></div>
 
-		<div class="row">
-			<div class="col-md-12 col-sm-12 ">
-				<div class="x_panel">
-					<div class="x_content">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="card-box table-responsive">
-									<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
-										<thead>
-											<tr>
-												<th width="10">No</th>
-												<th style="min-width: 120px;">Nama</th>
-												<th>KD Pendaftaran</th>
-												<th>Penumpang</th>
-												<th>Kendaraan</th>
-												<th>Kapal</th>
-												<th>Tujuan</th>
-												<th>Transaksi</th>
-												<th>Status</th>
-												<th width="50">Aksi</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php $no = 1; foreach ($result as $dta) { 
-												$kd_daftar = $dta['kd_transaksi'];
-												$orang = 0;
-												$kendaraan = 0;
-												$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
-												foreach ($penumpang as $pn) {
-													$orang = $orang + 1;
-													$user_id = $pn['user_id'];
-													$tanggal = $pn['tanggal_daftar'];
-													$tujuan = $pn['tujuan'];
-													$kapal_id = $pn['kapal_id'];
-													$status = $pn['status'];
-												} 
-												$user = mysqli_query($conn, "SELECT * FROM tb_users WHERE id='$user_id'");
-												$usr = mysqli_fetch_assoc($user);
+		<div class="x_panel">
+			<div class="x_content">
+				<div class="row">
+					<div class="col-sm-12 p-0">
+						<div class="card-box table-responsive">
+							<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
+								<thead>
+									<tr>
+										<th width="10">No</th>
+										<th width="120">Nama</th>
+										<th>KD Pendaftaran</th>
+										<th>Penumpang</th>
+										<th>Kendaraan</th>
+										<th>Kapal</th>
+										<th>Tujuan</th>
+										<th>Transaksi</th>
+										<th>Status</th>
+										<th width="50">Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php $no = 1; foreach ($result as $dta) { 
+										$kd_daftar = $dta['kd_transaksi'];
+										$orang = 0;
+										$kendaraan = 0;
+										$penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
+										foreach ($penumpang as $pn) {
+											$orang = $orang + 1;
+											$user_id = $pn['user_id'];
+											$tanggal = $pn['tanggal_daftar'];
+											$tujuan = $pn['tujuan'];
+											$kapal_id = $pn['kapal_id'];
+											$status = $pn['status'];
+										} 
+										$user = mysqli_query($conn, "SELECT * FROM tb_users WHERE id='$user_id'");
+										$usr = mysqli_fetch_assoc($user);
 
-												$get_kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE kd_pendaftaran='$kd_daftar'");
-												foreach ($get_kendaraan as $kn) {
-													$kendaraan = $kendaraan + 1;
-												}
+										$get_kendaraan = mysqli_query($conn, "SELECT * FROM tb_kendaraan WHERE kd_pendaftaran='$kd_daftar'");
+										foreach ($get_kendaraan as $kn) {
+											$kendaraan = $kendaraan + 1;
+										}
 
-												$get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
-												$kapal = mysqli_fetch_assoc($get_kapal); ?>
-												<tr>
-													<td><?= $no; ?></td>
-													<td>
-														<?= $usr['nama']; ?>
-														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail User" data-target="#detailUser<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
-													</td>
-													<td><?= $dta['kd_transaksi']; ?></td>
-													<td>
-														<?= $orang ?> Orang
-														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Penumpang" data-target="#detailPenumpang<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
-													</td>
-													<td>
-														<?= $kendaraan ?> Unit
-														<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailKendaraan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
-													</td>
-													<td>
-														<?php 
-														if (isset($kapal['nama_kapal'])) echo $kapal['nama_kapal'];
-														else echo '<i>-Data kapal tidak ada-</i>';
-														?>
-													</td>
-													<td><?= $tujuan ?></td>
-													<td>Rp. <?= $dta['total_harga']; ?></td>
-													<td class="text-center">
-														<?php 
-														if ($status == 'Selesai') $color = 'success'; 
-														else if ($status == 'Panding') $color = 'warning'; 
-														else if ($status == 'Batal') $color = 'danger'; 
-														?>
-														<span class="badge badge-pill badge-<?= $color ?>"><?= $status ?></span>
-													</td>
-													<td>
-														<?php 
-														if ($status == 'Selesai') { ?>
-															<a href="transaksi.php?find_code=<?= $dta['kd_transaksi'] ?>&cetak=true" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
-														<?php } else { 
-															if ($dta['foto_transaksi']) $link = 'konfirmasi.php?find_code='.$dta['id'];
-															else $link = 'transaksi.php?find_code='.$dta['kd_transaksi']; ?>
-															<a href="<?= $link ?>" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
-														<?php } ?>
-													</td>
-												</tr>
-												<?php $no = $no + 1; 
-											} ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
+										$get_kapal = mysqli_query($conn, "SELECT * FROM tb_kapal WHERE id='$kapal_id'");
+										$kapal = mysqli_fetch_assoc($get_kapal); ?>
+										<tr>
+											<td><?= $no; ?></td>
+											<td>
+												<?= $usr['nama']; ?>
+												<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail User" data-target="#detailUser<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
+											</td>
+											<td><?= $dta['kd_transaksi']; ?></td>
+											<td>
+												<?= $orang ?> Orang
+												<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Penumpang" data-target="#detailPenumpang<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
+											</td>
+											<td>
+												<?= $kendaraan ?> Unit
+												<a href="#" class="text-secondary" data-toggle="modal" data-toggle1="tooltip" data-original-title="Detail Kendaraan" data-target="#detailKendaraan<?= $dta['id'] ?>"><i class="fa fa-info-circle" style="font-size: 16px;"></i></a>
+											</td>
+											<td>
+												<?php 
+												if (isset($kapal['nama_kapal'])) echo $kapal['nama_kapal'];
+												else echo '<i>-Data kapal tidak ada-</i>';
+												?>
+											</td>
+											<td><?= $tujuan ?></td>
+											<td>Rp. <?= $dta['total_harga']; ?></td>
+											<td class="text-center">
+												<?php 
+												if ($status == 'Selesai') $color = 'success'; 
+												else if ($status == 'Panding') $color = 'warning'; 
+												else if ($status == 'Batal') $color = 'danger'; 
+												?>
+												<span class="badge badge-pill badge-<?= $color ?>"><?= $status ?></span>
+											</td>
+											<td>
+												<?php 
+												if ($status == 'Selesai') { ?>
+													<a href="transaksi.php?find_code=<?= $dta['kd_transaksi'] ?>&cetak=true" class="btn btn-success btn-sm btn-block" data-toggle1="tooltip" data-original-title="Cetak Tiket & Detail Transaksi" style="font-size: 10px;"><i class="fa fa-print"></i> Cetak</a>
+												<?php } else { 
+													if ($dta['foto_transaksi']) $link = 'konfirmasi.php?find_code='.$dta['id'];
+													else $link = 'transaksi.php?find_code='.$dta['kd_transaksi']; ?>
+													<a href="<?= $link ?>" class="btn btn-primary btn-sm btn-block" data-toggle1="tooltip" data-original-title="Proses Transaksi Pembayaran" style="font-size: 10px;"><i class="fa fa-ticket"></i> Proses</a>
+												<?php } ?>
+											</td>
+										</tr>
+										<?php $no = $no + 1; 
+									} ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

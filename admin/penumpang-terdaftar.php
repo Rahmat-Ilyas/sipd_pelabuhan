@@ -22,7 +22,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE status!='Batal' 
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="card-box table-responsive">
-									<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 13px;">
+									<table id="datatable" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
 										<thead>
 											<tr>
 												<th width="10">No</th>
