@@ -54,6 +54,7 @@ foreach ($get_kapal as $kpl) {
 															<th>Kategori</th>
 															<th>Tujuan</th>
 															<th>Status</th>
+															<th>Aksi</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -77,6 +78,13 @@ foreach ($get_kapal as $kpl) {
 																	else if ($dta['status'] == 'Batal') $color = 'danger'; 
 																	?>
 																	<span class="badge badge-pill badge-<?= $color ?>"><?= $dta['status'] ?></span>
+																</td>
+																<td>
+																	<?php if ($dta['status'] == 'Selesai') { ?>
+																		<a href="" class="btn btn-primary btn-sm tiket-penumpang" data-id="<?= $dta['id'] ?>"><i class="fa fa-print"></i> Cetak Tiket</a>
+																	<?php } else { ?>
+																		<a href="#" class="btn btn-primary btn-sm dont-proses"><i class="fa fa-print"></i> Cetak Tiket</a>
+																	<?php } ?>
 																</td>
 															</tr>
 															<?php $no = $no + 1; 
@@ -141,7 +149,83 @@ foreach ($get_kapal as $kpl) {
 	</div>
 <?php } ?>
 
+<div hidden="" class="penumpang-area px-2">
+	<div class="border row">
+		<div class="col-md-8 row justify-content-center mr-2" style="border-right: dashed; width: 60%;">
+			<div class="col-sm-12 row">
+				<div class="col-md-6" style="width: 50%;">
+					<h3><i>Tiket Pamatata</i></h3>
+				</div>
+				<div class="col-md-6 text-right" style="width: 50%;">
+					<h2 id="nomor_tiket"></h2>
+				</div>
+			</div>
+			<div class="col-sm-12 text-center mt-2">
+				<h2><b>Pelabuhan Pamatata - <span id="tujuan"></span></b></h2>
+				<h2><b><span id="kategori"></span> (<span id="umur"></span>)</b></h2>
+				<h2><b><span id="tanggal1"></span> / <span id="kapal"></span></b></h2>
+			</div>
+			<div class="col-sm-8" style="width: 80%;">
+				<h6><span id="nama"></span> (<span id="jenis_kelamin"></span>)</h6>
+				<h6>Rp. <span id="harga1"></span></h6>
+				<h6>NET: Rp. <span id="harga2"></span></h6>
+				<h6>Tanggal Pembelian: <span id="tanggal2"></span></h6>
+			</div>
+			<div class="col-sm-12 mt-4">
+				<span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+				<br><span>pamatata.port@gmail.com</span>
+				<br><span>+62821-9131-2813</span>
+			</div>
+		</div>
+		<div class="col-md-4 pt-5" style="width: 40%;">
+			<h6><b>Nomor Tiket:</b> <span id="re_nomor_tiket"></span></h6>
+			<h6><b>Nama:</b> <span id="re_nama"></span> (<span id="re_jenis_kelamin"></span>)</h6>
+			<h6><b>Kategori:</b> <span id="re_kategori"></span></h6>
+			<h6><b>Tanggal:</b> <span id="re_tanggal2"></span></h6>
+			<h6><b>Tujuan:</b> Pelabuhan Pamatata - <span id="re_tujuan"></span></h6>
+			<h6><b>Harga:</b> Rp. <span id="re_harga1"></span></h6>
+			<div class="pt-5 mt-5">
+				<span>Pamatata, Kec. Bontomatene, Kab. Selayar, Sul-Sel</span>
+				<br><span>pamatata.port@gmail.com</span>
+				<br><span>+62821-9131-2813</span>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php 
 require('template/footer.php');
 ?>
+
+<script>
+	$(document).ready(function() {
+		$(document).on('click', '.tiket-penumpang', function(e) {
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+
+			$.ajax({
+				url     : 'controller.php',
+				method  : "POST",
+				data    : { set_print: true, id: id },
+				success : function(data) {
+					$.each(data, function(key, val) {
+						$('#'+key).text(val);
+						$('#re_'+key).text(val);
+					});
+
+					$('.penumpang-area').printArea();
+				}
+			});
+		});
+
+		$('.dont-proses').click(function(e){
+			e.preventDefault();
+			swal({
+				title: "Tidak Dapat Diproses",
+				html: "Tiket tidakdapat dicetak, penumpang tidak/belum menyelesaikan transaksi",
+				type: "warning",
+			});
+		});
+	});
+</script>
 
