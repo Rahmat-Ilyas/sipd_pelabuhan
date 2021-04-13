@@ -89,7 +89,8 @@ foreach ($konfirmasi as $dta) {
             <div class="menu_section">
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
-                <li>
+                <!-- INI REVISI -->
+                <!-- <li>
                   <a><i class="fa fa-calculator"></i> Transaksi Pembayaran<span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="transaksi.php">Transaksi Langsung</a></li>
@@ -101,7 +102,8 @@ foreach ($konfirmasi as $dta) {
                       </a>
                     </li>
                   </ul>
-                </li>
+                </li> -->
+                <li><a href="transaksi.php"><i class="fa fa-calculator"></i> Transaksi Pembayaran</a></li>
                 <li>
                   <a href="data-pendaftar.php"><i class="fa fa-wpforms"></i> Data Pendaftar</a>
                 </li>

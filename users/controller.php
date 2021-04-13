@@ -1,4 +1,25 @@
 <?php 
+
+// Midtrans
+namespace Midtrans;
+
+require('../vendor/midtrans/midtrans-php/Midtrans.php');
+
+Config::$serverKey = "SB-Mid-server-ihGWw0dDF4hux9R5jAx7GeBd";
+Config::$isSanitized = true;
+
+// Uncomment for production environment
+// Config::$isProduction = true;
+
+
+// Enable 3D-Secure
+// Config::$is3ds = true;
+
+// Uncomment for append and override notification URL
+Config::$appendNotifUrl = "http://pamatata.tryapp.my.id";
+Config::$overrideNotifUrl = "http://pamatata.tryapp.my.id";
+
+
 function plugins($status, $message, $header) { ?>
 	<link rel="stylesheet" href="../admin/vendors/bootstrap/dist/css/bootstrap.min.css">
 	<script src="../admin/vendors/jquery/dist/jquery.min.js"></script>
@@ -87,7 +108,9 @@ function store($conn) {
 
 		// Input Penumpang
 		$harga = [];
+		$item_details = [];
 		$harga_kendaraan = 0;
+		$price = 0;
 		foreach ($_POST['nomor_tiket'] as $i => $data) {
 			$nomor_tiket = $_POST['nomor_tiket'][$i];
 			$nama = $_POST['nama'][$i];
@@ -101,6 +124,7 @@ function store($conn) {
 				if ($ktg['from_age'] <= $umur && $ktg['to_age'] >= $umur) {
 					$kategori = $ktg['kategori'];
 					$harga[] = $ktg['harga'];
+					$price = $ktg['harga'];
 				}
 				$more[] = ['to_age' => $ktg['to_age'], 'kategori' => $ktg['kategori'], 'harga' => $ktg['harga']];
 			}
@@ -109,7 +133,15 @@ function store($conn) {
 				$mr = max($more);
 				$kategori = $mr['kategori'];
 				$harga[] = $mr['harga'];
+				$price = $mr['harga'];
 			}
+
+			$item_details[] = [
+				'id' => $nomor_tiket,
+				'price' => $price,
+				'quantity' => 1,
+				'name' => "Tiket Penumpang (".$nama.")"
+			];
 
 			mysqli_query($conn, "INSERT INTO tb_penumpang VALUES (NULL, '$user_id', '$kapal_id', '$tujuan', '$kd_pendaftaran', '$nomor_tiket', '$nama', '$umur', '$alamat', '$jenis_kelamin', '$kategori', '$tanggal_daftar', 'Panding')");
 		}
@@ -134,8 +166,28 @@ function store($conn) {
 		$total_harga_tiket = array_sum($harga);
 		$biaya_kendaraan = $harga_kendaraan;
 		$total_harga = $total_harga_tiket + $harga_kendaraan;
+
+		// Midtrans Config
+		$transaction_details = [
+			'order_id' => $kd_pendaftaran
+		];
+
+		$item_details[] = [
+			'id' => '0101',
+			'price' => $harga_kendaraan,
+			'quantity' => 1,
+			'name' => "Tiket Kendaraan"
+		];
+
+		// Fill transaction details
+		$transaction = [
+			'transaction_details' => $transaction_details,
+			'item_details' => $item_details,
+		];
+
+		$payment_token = Snap::getSnapToken($transaction);
 		
-		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', NULL, 'Belum Lunas')");
+		mysqli_query($conn, "INSERT INTO tb_transaksi VALUES (NULL, '$kd_pendaftaran', '$user_id', '$total_harga_tiket', '$biaya_kendaraan', '$total_harga', NULL, '$payment_token', 'Belum Lunas')");
 
 		if (mysqli_affected_rows($conn) > 0) {
 			$message = 'Reservasi berhasil. Silahkan lakukan pembayaran di loket dengan menunjukkan Kode Transaksi atau lakukan transaksi via transfer sesuai intruksi. Selambat lambatnya 1 jam';
@@ -438,6 +490,45 @@ function config($conn) {
 		if ($jum_kendaraan >= $gol['kapasitas']) {
 			echo "full";
 		}
+	}
+
+	if (isset($_POST['midtrans_config'])) {
+
+		// Required
+		$transaction_details = [
+			'order_id' => rand()
+		];
+
+		// Optional
+		$item_details = [[
+			'id' => 'a1',
+			'price' => 18000,
+			'quantity' => 2,
+			'name' => "Tiket Penumpang"
+		],
+		[
+			'id' => 'a2',
+			'price' => 0,
+			'quantity' => 1,
+			'name' => "Tiket Kendaraan"
+		]];
+
+		// Optional
+		$customer_details = array(
+			'first_name'    => "Andri Rahmat",
+			'email'         => "andri@litani.com",
+			'phone'         => "081122334455",
+		);
+
+		// Fill transaction details
+		$transaction = array(
+			'transaction_details' => $transaction_details,
+			'customer_details' => $customer_details,
+			'item_details' => $item_details,
+		);
+
+		$snapToken = Snap::getSnapToken($transaction);
+		echo $snapToken;
 	}
 }
 

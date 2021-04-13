@@ -54,7 +54,7 @@ foreach ($get_kapal as $kpl) {
 															<th>Kategori</th>
 															<th>Tujuan</th>
 															<th>Status</th>
-															<th>Aksi</th>
+															<th width="90">Aksi</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -81,9 +81,9 @@ foreach ($get_kapal as $kpl) {
 																</td>
 																<td>
 																	<?php if ($dta['status'] == 'Selesai') { ?>
-																		<a href="" class="btn btn-primary btn-sm tiket-penumpang" data-id="<?= $dta['id'] ?>"><i class="fa fa-print"></i> Cetak Tiket</a>
+																		<a href="" class="btn btn-primary btn-sm tiket-penumpang" data-id="<?= $dta['id'] ?>" style="font-size: 11px;"><i class="fa fa-print"></i> Cetak Tiket</a>
 																	<?php } else { ?>
-																		<a href="#" class="btn btn-primary btn-sm dont-proses"><i class="fa fa-print"></i> Cetak Tiket</a>
+																		<a href="#" class="btn btn-primary btn-sm dont-proses" style="font-size: 11px;"><i class="fa fa-print"></i> Cetak Tiket</a>
 																	<?php } ?>
 																</td>
 															</tr>
