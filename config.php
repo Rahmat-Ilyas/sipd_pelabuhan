@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Makassar");
 session_start();
-$conn = mysqli_connect("localhost","root","","db_pelabuhan");
+$conn = mysqli_connect("localhost","u3737783_pamatata","u3737783_pamatata","u3737783_pamatata");
 
 // Batalkan Reservasi
 $reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE status='Belum Lunas'");
