@@ -1,21 +1,14 @@
 <?php 
 require('template/header.php');
 
-$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
-$get_data = mysqli_fetch_assoc($reservasi);
-
-$orang = 0;
-$kendaraan = 0;
-$tanggal = '';
-$reserv = [];
-if (isset($get_data)) {
-  $kd_daftar = $get_data['kd_transaksi'];
-
-  // CEK STATUS TRANSAKSI MIDTRANS 
+// CEK STATUS TRANSAKSI MIDTRANS 
+$reservasi1 = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
+$get_data1 = mysqli_fetch_assoc($reservasi1);
+if (isset($get_data1)) {
+  $kd_daftar1 = $get_data1['kd_transaksi'];
   $curl = curl_init();
-
   curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.sandbox.midtrans.com/v2/".$kd_daftar."/status",
+    CURLOPT_URL => "https://api.sandbox.midtrans.com/v2/".$kd_daftar1."/status",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -38,13 +31,22 @@ if (isset($get_data)) {
     $transaction_status = $response['transaction_status'];
     if ($transaction_status == 'settlement' || $transaction_status == 'capture') {
       // Update Transaksi
-      $transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Lunas' WHERE kd_transaksi='$kd_daftar'");
+      $transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Lunas' WHERE kd_transaksi='$kd_daftar1'");
       // Update Penumpang
-      $penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Selesai' WHERE kd_pendaftaran='$kd_daftar'");
-      $get_data = mysqli_fetch_assoc($reservasi);
+      $penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Selesai' WHERE kd_pendaftaran='$kd_daftar1'");
     }
   }
+}
 
+$reservasi = mysqli_query($conn, "SELECT * FROM tb_transaksi WHERE user_id='$user_id' AND status!='Batal' ORDER BY id DESC");
+$get_data = mysqli_fetch_assoc($reservasi);
+
+$orang = 0;
+$kendaraan = 0;
+$tanggal = '';
+$reserv = [];
+if (isset($get_data)) {
+  $kd_daftar = $get_data['kd_transaksi'];
   $get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
   $tgl = mysqli_fetch_assoc($get_penumpang);
   $tanggal_daftar = $tgl['tanggal_daftar'];
