@@ -16,8 +16,8 @@ Config::$isSanitized = true;
 // Config::$is3ds = true;
 
 // Uncomment for append and override notification URL
-Config::$appendNotifUrl = "http://pamatata.tryapp.my.id";
-Config::$overrideNotifUrl = "http://pamatata.tryapp.my.id";
+// Config::$appendNotifUrl = "http://pamatata.tryapp.my.id";
+// Config::$overrideNotifUrl = "http://pamatata.tryapp.my.id";
 
 
 function plugins($status, $message, $header) { ?>
@@ -496,7 +496,7 @@ function config($conn) {
 
 		// Required
 		$transaction_details = [
-			'order_id' => rand()
+			'order_id' => 'REG-0008'.rand()
 		];
 
 		// Optional
@@ -515,8 +515,8 @@ function config($conn) {
 
 		// Optional
 		$customer_details = array(
-			'first_name'    => "Andri Rahmat",
-			'email'         => "andri@litani.com",
+			'first_name'    => "Rahmat Ilyas",
+			'email'         => "rahmat.ilyas142@gmail.com",
 			'phone'         => "081122334455",
 		);
 

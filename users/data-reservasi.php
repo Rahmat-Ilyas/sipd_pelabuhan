@@ -10,6 +10,41 @@ $tanggal = '';
 $reserv = [];
 if (isset($get_data)) {
   $kd_daftar = $get_data['kd_transaksi'];
+
+  // CEK STATUS TRANSAKSI MIDTRANS 
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://api.sandbox.midtrans.com/v2/".$kd_daftar."/status",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_HTTPHEADER => array(
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Basic U0ItTWlkLXNlcnZlci1paEdXdzBkREY0aHV4OVI1akF4N0dlQmQ6"
+    ),
+  ));
+
+  $response = curl_exec($curl);
+
+  curl_close($curl);
+  $response = json_decode($response, true);
+  if (isset($response['transaction_status'])) {
+    $transaction_status = $response['transaction_status'];
+    if ($transaction_status == 'settlement' || $transaction_status == 'capture') {
+      // Update Transaksi
+      $transaksi = mysqli_query($conn, "UPDATE tb_transaksi SET status='Lunas' WHERE kd_transaksi='$kd_daftar'");
+      // Update Penumpang
+      $penumpang = mysqli_query($conn, "UPDATE tb_penumpang SET status='Selesai' WHERE kd_pendaftaran='$kd_daftar'");
+      $get_data = mysqli_fetch_assoc($reservasi);
+    }
+  }
+
   $get_penumpang = mysqli_query($conn, "SELECT * FROM tb_penumpang WHERE kd_pendaftaran='$kd_daftar'");
   $tgl = mysqli_fetch_assoc($get_penumpang);
   $tanggal_daftar = $tgl['tanggal_daftar'];
@@ -364,8 +399,29 @@ require('template/footer.php');
 
     $(document).on('click', '#pay-button', function(e) {
       e.preventDefault();
-      snap.pay("<?= $reserv['payment_token'] ?>");
+      snap.pay("<?= $reserv['payment_token'] ?>", {
+        onSuccess: function(result){
+          alert_payment();
+        },
+        onPending: function(result){
+          alert_payment();
+        },
+        onError: function(result){
+          alert_payment();
+        }
+      });
     });
+
+    function alert_payment() {
+      swal({
+        title: "Muat Ulang Halaman",
+        html: "Jika anda telah menyelesaikan pembayaran. Silahkan muat ulang halaman untuk mengupdate status pembayaran",
+        type: "info",
+        preConfirm: () => {
+          location.href = "data-reservasi.php";
+        }
+      });
+    }
 
     $(document).on('click', '.print-tiket', function(e) {
       e.preventDefault();
